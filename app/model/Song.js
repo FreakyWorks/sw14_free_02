@@ -7,8 +7,11 @@ Ext.define('Muzic.model.Song', {
 			{name: 'album', type: 'string'},
 			{name: 'filepath', type: 'string'},
 			{name: 'alreadyHeard', type: 'boolean', defaultValue: false}
-		]
-	},
+		],
+		validations: [{ type: 'presence', field: 'filepath'}]
+	}
+	
+	
 
 	/*getFullName: function() {
 		return this.get('first_name') + ' ' + this.get('last_name');
