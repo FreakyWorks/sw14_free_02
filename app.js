@@ -39,7 +39,7 @@ Ext.application({
     
     //models: [ 'Song' ], //will be defined in our Songs controller
 
-    views: [ 'Main', 'titles.Card' ],
+    views: [ 'Main', 'Player', 'titles.Card' ],
 
     controllers: [ 'Songs' ],
 

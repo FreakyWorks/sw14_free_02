@@ -7,7 +7,8 @@ Ext.define('Muzic.controller.Songs', {
 		
 		refs: {
 			songList: 'list', //generic! change later to more specific
-			pauseButton: '#pauseButton'
+			pauseButton: '#pauseButton',
+			audioPlayer: 'audio'
 		},
 		
 		control: {
@@ -16,6 +17,9 @@ Ext.define('Muzic.controller.Songs', {
 			},
 			pauseButton: {
 				tap: 'onPauseButtonTap'
+			},
+			audioPlayer: {
+				ended: 'onPlayEnded'
 			}
 		}
 	},
@@ -34,9 +38,13 @@ Ext.define('Muzic.controller.Songs', {
         audio.toggle();
         self.setText(audio.isPlaying() ? 'Pause' : 'Play');
 		//Pause music
+	},
+	
+	onPlayEnded: function(self, time, eOpts)
+	{
+		var button = Ext.getCmp('pauseButton');
+		button.setText('Play');
 	}
 
-	/*getFullName: function() {
-		return this.get('first_name') + ' ' + this.get('last_name');
-	}*/
+	
 });

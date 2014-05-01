@@ -9,7 +9,7 @@ describe('Muzic.model.Song', function() {
 	  expect(model.get('alreadyHeard')).toEqual(false);
 	});
 	
-	it('requires a path', function() {
+	it('requires a filepath', function() {
 	  var model = Ext.create('Muzic.model.Song');
 	  console.log(model);
 	  var errors = model.validate();
