@@ -638,7 +638,23 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "Muzic.view.Main": []
+  "Muzic.controller.Songs": [],
+  "Muzic.model.Song": [],
+  "Muzic.store.Songs": [],
+  "Muzic.view.Main": [],
+  "Muzic.view.about.Card": [],
+  "Muzic.view.about.HtmlPage": [],
+  "Muzic.view.about.List": [],
+  "Muzic.view.about.VideoList": [],
+  "Muzic.view.session.Card": [],
+  "Muzic.view.session.Detail": [],
+  "Muzic.view.session.Info": [],
+  "Muzic.view.session.List": [],
+  "Muzic.view.speaker.Card": [],
+  "Muzic.view.speaker.Detail": [],
+  "Muzic.view.speaker.Info": [],
+  "Muzic.view.speaker.List": [],
+  "Muzic.view.titles.Card": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1357,7 +1373,49 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "Muzic.controller.Songs": [],
+  "Muzic.model.Song": [],
+  "Muzic.store.Songs": [],
   "Muzic.view.Main": [
     "widget.main"
+  ],
+  "Muzic.view.about.Card": [
+    "widget.aboutContainer"
+  ],
+  "Muzic.view.about.HtmlPage": [
+    "widget.htmlPage"
+  ],
+  "Muzic.view.about.List": [
+    "widget.aboutList"
+  ],
+  "Muzic.view.about.VideoList": [
+    "widget.videoList"
+  ],
+  "Muzic.view.session.Card": [
+    "widget.sessionContainer"
+  ],
+  "Muzic.view.session.Detail": [
+    "widget.session"
+  ],
+  "Muzic.view.session.Info": [
+    "widget.sessionInfo"
+  ],
+  "Muzic.view.session.List": [
+    "widget.sessions"
+  ],
+  "Muzic.view.speaker.Card": [
+    "widget.speakerContainer"
+  ],
+  "Muzic.view.speaker.Detail": [
+    "widget.speaker"
+  ],
+  "Muzic.view.speaker.Info": [
+    "widget.speakerInfo"
+  ],
+  "Muzic.view.speaker.List": [
+    "widget.speakers"
+  ],
+  "Muzic.view.titles.Card": [
+    "widget.titleContainer"
   ]
 });

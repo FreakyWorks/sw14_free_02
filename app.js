@@ -11,14 +11,12 @@
 */
 
 Ext.application({
+	appFolder: '/app',
     name: 'Muzic',
+    title: 'Muzic - the Croatian player',
 
     requires: [
         'Ext.MessageBox'
-    ],
-
-    views: [
-        'Main'
     ],
 
     icon: {
@@ -38,11 +36,22 @@ Ext.application({
         '1536x2008': 'resources/startup/1536x2008.png',
         '1496x2048': 'resources/startup/1496x2048.png'
     },
+    
+    //models: [ 'Song' ], //will be defined in our Songs controller
+
+    views: [ 'Main', 'titles.Card' ],
+
+    controllers: [ 'Songs' ],
+
+    //stores: [ 'Songs' ], //will be defined in our Songs controller
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-
+        /*Muzic.util.Proxy.process('data/feed.js', function() {
+            Ext.Viewport.add({ xtype: 'main' });
+            Ext.Viewport.setMasked(false);
+        });*/
         // Initialize the main view
         Ext.Viewport.add(Ext.create('Muzic.view.Main'));
     },

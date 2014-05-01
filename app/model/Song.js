@@ -1,0 +1,16 @@
+Ext.define('Muzic.model.Song', {
+	extend: 'Ext.data.Model',
+
+	config: {
+		fields: [
+			{name: 'title', type: 'string'},
+			{name: 'album', type: 'string'},
+			{name: 'filepath', type: 'string'},
+			{name: 'alreadyHeard', type: 'boolean', defaultValue: false}
+		]
+	},
+
+	/*getFullName: function() {
+		return this.get('first_name') + ' ' + this.get('last_name');
+	}*/
+});
