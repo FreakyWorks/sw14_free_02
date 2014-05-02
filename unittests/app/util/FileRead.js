@@ -7,7 +7,7 @@ describe("Filesytem", function () {
 	  	Muzic.util.FileRead.requestOurFS();
 	    setTimeout(function() {
 	      done();
-	    }, 3);
+	    }, 2000);
 	  });
 	  
 	it("successfully requested", function(done) {
@@ -25,7 +25,7 @@ describe("Get Directory", function () {
 	  	Muzic.util.FileRead.requestDir('Music');
 	    setTimeout(function() {
 	      done();
-	    }, 10);
+	    }, 2000);
 	});
 	  
 	it("has gotten our music directory", function(done) {
@@ -47,7 +47,7 @@ describe("Directory Reader", function () {
 	  	Muzic.util.FileRead.requestEntries();
 	    setTimeout(function() {
 	      done();
-	    }, 3);
+	    }, 2000);
 	});
 	  
 	it("has gotten the entries of our Music directory", function(done) {
