@@ -1,9 +1,20 @@
-describe("Sencha", function () {
+Ext.require('Muzic.util.FileRead');
 
-    it("has loaded itself", function () {
-    	var i = file.requestOurFS();
-
-        expect(i).toBe(0);
-    });
+describe("Cordova FileAPI", function () {
+	  beforeEach(function(done) {
+	  	Muzic.util.FileRead.requestOurFS();
+	    setTimeout(function() {
+	      done();
+	    }, 3);
+	  });
+	  
+	it("has got the file system", function(done) {
+		var i = Muzic.util.FileRead.getFileSys();
+		console.log(i);
+		
+	    expect(i).toBeDefined();
+		done();
+	});
 
 });
+
