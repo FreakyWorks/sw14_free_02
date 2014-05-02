@@ -28,10 +28,8 @@ describe("Sencha", function () {
 });
 
 describe("PhoneGap", function () {
-
     it("has been loaded", function () {
-        expect(Ext.browser.is.PhoneGap).toBeTruthy();
-        
+        expect(cordova).toBeDefined();
     });
 
 });
