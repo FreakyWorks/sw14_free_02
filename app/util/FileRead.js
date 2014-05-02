@@ -4,7 +4,8 @@ Ext.define('Muzic.util.FileRead', {
 	autoDestroy: false,
 	config : {
         fileSys : undefined,
-        dir: undefined
+        dir: undefined,
+        dirEntries: undefined
    },
    
 	constructor : function(config) {
@@ -46,7 +47,21 @@ Ext.define('Muzic.util.FileRead', {
 		console.log(directory);
 	},
 	
-
+	//Request entries of directory
+	requestEntries : function () {
+		var directory = Muzic.util.FileRead.getDir();
+		var directoryReader = directory.createReader();
+		directoryReader.readEntries(this.gotEntries, this.logErrorCode);
+	},
+	
+	//Entries successfully requested
+	gotEntries : function (entries) {
+		//Muzic.util.FileRead.setEntries(entries);
+		console.log('got entries');
+		console.log(entries);
+		Muzic.util.FileRead.setDirEntries(entries);
+	},
+	
 	
 	
 	
