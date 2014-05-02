@@ -18,7 +18,7 @@ afterEach(function () {
     Ext.data.Model.cache = {};      // Clear any cached models
 });
 
-//Hack
+//Hack - remove
 var domEl = document.createElement('div');
 domEl.setAttribute('id', 'jasmine_content');
 /*
