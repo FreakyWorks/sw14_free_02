@@ -9,6 +9,7 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
+Ext.require('Muzic.util.FileRead');
 
 Ext.application({
 	appFolder: '/app',
@@ -16,7 +17,8 @@ Ext.application({
     title: 'Muzic - the Croatian player',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Muzic.util.FileRead'
     ],
 
     icon: {

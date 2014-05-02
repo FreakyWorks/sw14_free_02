@@ -10,4 +10,10 @@
     <content src="index.html" />
     <access origin="*" />
     <feature name="File" value="File" />
+    <feature name="Notification" value="Notification" />
+    <feature name="Vibration" value="Vibration" />
+    <feature name="Device" value="Device" />
+    <rim:permissions>
+        <rim:permit>read_device_identifying_information</rim:permit>
+    </rim:permissions>
 </widget>

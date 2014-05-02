@@ -11,6 +11,24 @@
                         {
                             "xml": "<feature name=\"File\" value=\"File\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\" value=\"Notification\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Vibration\" value=\"Vibration\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\" value=\"Device\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/widget/rim:permissions": [
+                        {
+                            "xml": "<rim:permit>read_device_identifying_information</rim:permit>",
+                            "count": 1
                         }
                     ]
                 }
@@ -19,6 +37,15 @@
     },
     "installed_plugins": {
         "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.freakyworks.muzic"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.freakyworks.muzic"
+        },
+        "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "com.freakyworks.muzic"
+        },
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.freakyworks.muzic"
         }
     },

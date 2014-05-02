@@ -27,6 +27,11 @@ Ext.define('Muzic.controller.Songs', {
 	onItemTap: function(self, index, target, record, e)
 	{
 		console.log("da");
+		//alert("h");
+		console.log("s" + Ext.browser.is.PhoneGap);
+		//alert(device.uuid);
+		Muzic.util.FileRead.requestOurFS();
+
 	},
 	
 	onPauseButtonTap: function(self, e)

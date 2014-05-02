@@ -30,7 +30,6 @@ describe("Sencha", function () {
 describe("PhoneGap", function () {
 
     it("has been loaded", function () {
-        expect(device.uuid).toBeGreaterThan(1);
         expect(Ext.browser.is.PhoneGap).toBeTruthy();
         
     });
