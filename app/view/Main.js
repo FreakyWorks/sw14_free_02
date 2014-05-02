@@ -11,9 +11,23 @@ Ext.define('Muzic.view.Main', {
 		},*/
 
 		items: [
-			{ xclass: 'Muzic.view.titles.Card' }/*,
-			{ xclass: 'Muzic.view.speaker.Card' },
-			{ xclass: 'Muzic.view.about.Card' }*/
+			{
+                docked: 'top',
+                xtype: 'titlebar',
+                title: 'Muzic',
+                items: [
+                	{
+                		//iconCls: 'pause',
+                		text: 'Play',
+                		xtype: 'button',
+                		iconMask: true,
+                		align: 'right',
+                		id: 'pauseButton'
+                	}
+                ]
+            },
+			{ xclass: 'Muzic.view.titles.Card' },
+			{ xclass: 'Muzic.view.Player' }
 		]
 	}
 });

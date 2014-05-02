@@ -6,11 +6,7 @@ describe('Muzic.controller.Songs', function () {
     controller.launch();
   });
 
-  afterEach(function () {
-    app.destroy();
-  });
-  
-  it('#newOrder', function () {
+  it('#play', function () {
   	var audio = Ext.create('Ext.Audio');
     var order = controller.onPauseButtonTap();
     expect(controller.onPauseButtonTap).toEqual('Muzic.model.Song');
@@ -22,4 +18,8 @@ describe('Muzic.controller.Songs', function () {
     expect(order.$className).toEqual('Muzic.model.Song');
     expect(order.phantom).toBeTruthy();
   });*/
+ 
+  afterEach(function () {
+    app.destroy();
+  });
 });
