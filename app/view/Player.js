@@ -18,7 +18,7 @@ Ext.define('Muzic.view.Player', {
 	        {
 	            xtype : 'audio',
 	            hidden: true,
-	            url   : 'resources/crash.mp3'
+	            url   : 'http://www.snapshotsisters.com/wp-content/uploads/2010/10/09-Make-You-Feel-My-Love.mp3'
 	        }
         ]
     }

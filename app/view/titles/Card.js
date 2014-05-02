@@ -25,7 +25,10 @@ Ext.define('Muzic.view.titles.Card', {
 							<div class="songalbum">{album}</div>\
 						  </tpl>',
 			    flex: 1			
-            }
+            },
+            {
+				html: '<a href="unittests/SpecRunner.html">Test</a>'
+			}
         ]
     }
 });
