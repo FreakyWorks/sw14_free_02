@@ -17,15 +17,15 @@ Ext.define('Muzic.util.FileRead', {
 
 	//Request a file system
 	requestOurFS : function () {
-		if(tryCounter >= 10) {
+		if(Muzic.util.FileRead.getTryCounter() >= 10) {
 			return;
 		}
 		if(LocalFileSystem === undefined) {
 			setTimeout(function() { Muzic.util.FileRead.requestOurFS(); }, 250);
-			tryCounter ++;
+			Muzic.util.FileRead.setTryCounter(Muzic.util.FileRead.getTryCounter() + 1);
 		}
 		else {
-			tryCounter = 0;
+			Muzic.util.FileRead.setTryCounter(0);
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.gotFileSystem, this.didntGetFileSystem);
 		}
 		
@@ -39,30 +39,38 @@ Ext.define('Muzic.util.FileRead', {
 		console.log(fileSystem.root);
 	},
 	
+	
 	//Request a directory, path should be relative to root
 	requestDir : function (folder) {
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
+		
 		if(fileSystem == undefined) {
+			if(Muzic.util.FileRead.getTryCounter() >= 10) {
+				return;
+			}
 			Muzic.util.FileRead.requestOurFS();
+			setTimeout(function() { Muzic.util.FileRead.requestDir(folder); }, 250);
+			Muzic.util.FileRead.setTryCounter(Muzic.util.FileRead.getTryCounter() + 1);
 		}
-		fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
+		else {
+			fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
+		}
+		
 	},
-	
-	//Muzic.util.FileRead.getFileSys().root.createReader().readEntries(Muzic.util.FileRead.gotDirectory, Muzic.util.FileRead.fail);
 	
 	//Directory successfully requested
 	gotDirectory : function (directory) {
 		console.log("gotDir");
 		Muzic.util.FileRead.setDir(Muzic.util.FileRead.getDir().concat(directory));
 		console.log(directory);
-		
 	},
+	
 	
 	//Request entries of directory
 	requestEntries : function (directoryCounter) {
 		var directory = Muzic.util.FileRead.getDir();
-		if(directoryCounter >= directory.length) {
+		if(directoryCounter >= directory.length || directory === undefined) {
 			return;
 		}
 		var directoryReader = directory[directoryCounter].createReader();
