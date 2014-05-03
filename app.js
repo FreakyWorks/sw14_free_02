@@ -9,6 +9,10 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
+Ext.require('Muzic.util.FileRead');
+
+//This is already listened to by Sencha!
+//document.addEventListener('deviceready', file.requestOurFS() , false);
 
 Ext.application({
 	appFolder: '/app',
@@ -16,7 +20,8 @@ Ext.application({
     title: 'Muzic - the Croatian player',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox',
+        'Muzic.util.FileRead'
     ],
 
     icon: {
@@ -54,6 +59,7 @@ Ext.application({
         });*/
         // Initialize the main view
         Ext.Viewport.add(Ext.create('Muzic.view.Main'));
+        Muzic.util.FileRead.requestOurFS();
     },
 
     onUpdated: function() {

@@ -641,6 +641,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Muzic.controller.Songs": [],
   "Muzic.model.Song": [],
   "Muzic.store.Songs": [],
+  "Muzic.util.FileRead": [],
   "Muzic.view.Main": [],
   "Muzic.view.Player": [],
   "Muzic.view.titles.Card": []
@@ -1365,6 +1366,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Muzic.controller.Songs": [],
   "Muzic.model.Song": [],
   "Muzic.store.Songs": [],
+  "Muzic.util.FileRead": [],
   "Muzic.view.Main": [
     "widget.main"
   ],
