@@ -72,7 +72,7 @@ describe("Muzic.util.FileRead", function () {
 	describe("Store", function () {
 		var store;
 		 beforeEach(function(done) {
-		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 		  	store = Muzic.util.FileRead.getStore('blablabla');
 		  	console.log(store);
 		    setTimeout(function() {
@@ -88,7 +88,7 @@ describe("Muzic.util.FileRead", function () {
 	describe("Store", function () {
 		var store;
 		 beforeEach(function(done) {
-		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 		  	store = Muzic.util.FileRead.getStore('Songs');
 		  	console.log(store);
 		    setTimeout(function() {
@@ -96,9 +96,12 @@ describe("Muzic.util.FileRead", function () {
 		    }, 4000);
 		});
 		
-		it("Songs has been loaded", function(done) {
+		it("Songs has been loaded and saved", function(done) {
 			expect(store).toBeDefined();
 			expect(store.getStoreId()).toBe('Songs');
+			var savedStore = Muzic.util.FileRead.getStore();
+			expect(savedStore).toBeDefined();
+			expect(savedStore.getStoreId()).toBe('Songs');
 			done();
 		});
 	});
@@ -113,7 +116,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 	});
 	
-		describe("Model Creator", function () {
+	describe("Model Creator", function () {
 		it("has returned our model", function() {
 			var model = Muzic.util.FileRead.createModel( { filepath : 'samplepath' } );
 			
@@ -122,6 +125,7 @@ describe("Muzic.util.FileRead", function () {
 			expect(model.data.filepath).toMatch('samplepath');
 		});
 	});
+
 
 
 });
