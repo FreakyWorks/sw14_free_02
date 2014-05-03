@@ -112,6 +112,16 @@ describe("Muzic.util.FileRead", function () {
 			expect(object.filepath).toMatch('file:///storage/sdcard/Music/');
 		});
 	});
+	
+		describe("Model Creator", function () {
+		it("has returned our model", function() {
+			var model = Muzic.util.FileRead.createModel( { filepath : 'samplepath' } );
+			
+			expect(model).toBeDefined();
+			console.log(model);
+			expect(model.data.filepath).toMatch('samplepath');
+		});
+	});
 
 
 });
