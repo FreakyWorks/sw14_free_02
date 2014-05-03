@@ -104,7 +104,14 @@ describe("Muzic.util.FileRead", function () {
 	});
 	
 	
-
+	describe("Object Creator", function () {
+		it("has returned our object", function() {
+			var object = Muzic.util.FileRead.createObject(Muzic.util.FileRead.getDirEntries().length - 1);
+			
+			expect(object).toBeDefined();
+			expect(object.filepath).toMatch('file:///storage/sdcard/Music/');
+		});
+	});
 
 
 });
