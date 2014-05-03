@@ -4,8 +4,8 @@ Ext.define('Muzic.util.FileRead', {
 	autoDestroy: false,
 	config : {
         fileSys : undefined,
-        dir: undefined,
-        dirEntries: undefined
+        dir: [],
+        dirEntries: []
    },
    
 	constructor : function(config) {
@@ -33,7 +33,6 @@ Ext.define('Muzic.util.FileRead', {
 	
 	//Request a directory, path should be relative to root
 	requestDir : function (folder) {
-
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
 		fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
@@ -44,14 +43,18 @@ Ext.define('Muzic.util.FileRead', {
 	//Directory successfully requested
 	gotDirectory : function (directory) {
 		console.log("gotDir");
-		Muzic.util.FileRead.setDir(directory);
+		Muzic.util.FileRead.setDir(Muzic.util.FileRead.getDir().concat(directory));
 		console.log(directory);
+		
 	},
 	
 	//Request entries of directory
-	requestEntries : function () {
+	requestEntries : function (directoryCounter) {
 		var directory = Muzic.util.FileRead.getDir();
-		var directoryReader = directory.createReader();
+		if(directoryCounter >= directory.length) {
+			return;
+		}
+		var directoryReader = directory[directoryCounter].createReader();
 		directoryReader.readEntries(this.gotEntries, this.logErrorCode);
 	},
 	
@@ -60,7 +63,7 @@ Ext.define('Muzic.util.FileRead', {
 		//Muzic.util.FileRead.setEntries(entries);
 		console.log('got entries');
 		console.log(entries);
-		Muzic.util.FileRead.setDirEntries(entries);
+		Muzic.util.FileRead.setDirEntries(Muzic.util.FileRead.getDirEntries().concat(entries));
 	},
 	
 	getStore : function (storeName) {
@@ -71,6 +74,7 @@ Ext.define('Muzic.util.FileRead', {
 			return undefined;
 		}
 	},
+
 	
 	
 	
