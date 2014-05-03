@@ -16,7 +16,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 		
 		afterEach(function () {
-	    	//Muzic.util.FileRead.setFileSys(undefined);
+	    	Muzic.util.FileRead.setFileSys(undefined);
 		});
 	});
 	
