@@ -6,7 +6,8 @@ Ext.define('Muzic.util.FileRead', {
         fileSys : undefined,
         dir: [],
         dirEntries: [],
-        store : undefined
+        store : undefined,
+        tryCounter: 0
    },
    
 	constructor : function(config) {
@@ -16,8 +17,17 @@ Ext.define('Muzic.util.FileRead', {
 
 	//Request a file system
 	requestOurFS : function () {
-		//console.log(getEventListener(document));
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.gotFileSystem, this.didntGetFileSystem);
+		if(tryCounter >= 10) {
+			return;
+		}
+		if(LocalFileSystem === undefined) {
+			setTimeout(function() { Muzic.util.FileRead.requestOurFS(); }, 250);
+			tryCounter ++;
+		}
+		else {
+			tryCounter = 0;
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, this.gotFileSystem, this.didntGetFileSystem);
+		}
 		
 	},
 
@@ -27,15 +37,15 @@ Ext.define('Muzic.util.FileRead', {
 		Muzic.util.FileRead.setFileSys(fileSystem);
 		//TEST:
 		console.log(fileSystem.root);
-		/*var dirReader = fileSystem.root.createReader();
-		console.log("hier");
-		dirReader.readEntries(this.readEntries, this.fail);*/
 	},
 	
 	//Request a directory, path should be relative to root
 	requestDir : function (folder) {
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
+		if(fileSystem == undefined) {
+			Muzic.util.FileRead.requestOurFS();
+		}
 		fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
 	},
 	
@@ -94,7 +104,21 @@ Ext.define('Muzic.util.FileRead', {
 		var model = Ext.create('Muzic.model.Song', object);
 		return model;
 	},
-
+	
+	addModelToStore : function (model, store) {
+		if (model === undefined || store === undefined) {
+			return;
+		}
+		store.add(model);
+	},
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//Our error handlers
 	didntGetFileSystem : function (err) {

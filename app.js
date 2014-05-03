@@ -11,6 +11,9 @@
 */
 Ext.require('Muzic.util.FileRead');
 
+//This is already listened to by Sencha!
+//document.addEventListener('deviceready', file.requestOurFS() , false);
+
 Ext.application({
 	appFolder: '/app',
     name: 'Muzic',
@@ -56,6 +59,7 @@ Ext.application({
         });*/
         // Initialize the main view
         Ext.Viewport.add(Ext.create('Muzic.view.Main'));
+        Muzic.util.FileRead.requestOurFS();
     },
 
     onUpdated: function() {
