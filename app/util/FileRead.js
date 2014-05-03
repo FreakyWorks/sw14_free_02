@@ -67,7 +67,7 @@ Ext.define('Muzic.util.FileRead', {
 		Muzic.util.FileRead.setDirEntries(Muzic.util.FileRead.getDirEntries().concat(entries));
 	},
 	
-	getStore : function (storeName) {
+	requestStore : function (storeName) {
 		if(storeName !== undefined && storeName !== null && storeName.length > 0) {
 			var store = Ext.getStore(storeName);
 			Muzic.util.FileRead.setStore(store);
@@ -94,7 +94,6 @@ Ext.define('Muzic.util.FileRead', {
 		var model = Ext.create('Muzic.model.Song', object);
 		return model;
 	},
-	
 
 	
 	//Our error handlers
