@@ -84,6 +84,14 @@ Ext.define('Muzic.util.FileRead', {
 		}
 	},
 	
+	createModel : function (object) {
+		if (object === undefined) {
+			return;
+		}
+		var model = Ext.create('Muzic.model.Song', object);
+		return model;
+	},
+	
 
 	
 	//Our error handlers
