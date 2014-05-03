@@ -63,7 +63,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 		
 		afterEach(function () {
-	    	Muzic.util.FileRead.setDir(undefined);
+	    	Muzic.util.FileRead.setDir([]);
 		});
 	});
 
@@ -155,8 +155,62 @@ describe("Muzic.util.FileRead", function () {
 			expect(lastItem.filepath).toMatch('samplepath');
 			//done();
 		});
-		
 	});
+	
+	
+	describe("Entry to store adder", function () {
+		var store;
+		beforeEach(function(done) {
+			console.log("before");
+			jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+		  	store = Muzic.util.FileRead.requestStore('Songs');
+		  	console.log(store);
+		    setTimeout(function() {
+		      done();
+		    }, 3000);
+		});
+		it("has stored our model to the store", function() {
+			Muzic.util.FileRead.addModelToStore(Muzic.util.FileRead.createModel( { filepath : 'samplepath' } ), store);
+			console.log(store.data.all);
+			var data = store.data.all;
+			expect(data).toBeDefined();
+			var lastItem = data[data.length - 1].data;
+			expect(lastItem).toBeDefined();
+			expect(lastItem.filepath).toMatch('samplepath');
+			//done();
+		});
+		it("should fail but keep existing data intact", function() {
+			Muzic.util.FileRead.addModelToStore(undefined, store);
+			var data = store.data.all;
+			var lastItem = data[data.length - 1].data;
+			expect(lastItem.filepath).toMatch('samplepath');
+			//done();
+		});
+	});
+	
+	
+	describe("addAllEntriesToStore", function () {
+		beforeEach(function(done) {
+			console.log("before");
+			jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+		  	Muzic.util.FileRead.requestDir('Music');
+		    setTimeout(function() {
+		      done();
+		    }, 3000);
+		});
+		it("has stored all entries to the store", function() {
+			console.log("hier");
+			Muzic.util.FileRead.addAllEntriesToStore('Songs');
+			var data = Muzic.util.FileRead.getStore().data.all;
+			var previousItem = data[data.length - 2].data;
+			var lastItem = data[data.length - 1].data;
+			//Expecting that folder contains both crash.mp3 and crash1.mp3
+			expect(previousItem.filepath).toMatch('crash.mp3');
+			expect(lastItem.filepath).toMatch('crash1.mp3');
+			//done();
+		});
+	});
+	
 
 });
 
