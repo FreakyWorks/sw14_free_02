@@ -73,7 +73,7 @@ describe("Muzic.util.FileRead", function () {
 		var store;
 		 beforeEach(function(done) {
 		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-		  	store = Muzic.util.FileRead.getStore('blablabla');
+		  	store = Muzic.util.FileRead.requestStore('blablabla');
 		  	console.log(store);
 		    setTimeout(function() {
 		      done();
@@ -89,7 +89,7 @@ describe("Muzic.util.FileRead", function () {
 		var store;
 		 beforeEach(function(done) {
 		 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-		  	store = Muzic.util.FileRead.getStore('Songs');
+		  	store = Muzic.util.FileRead.requestStore('Songs');
 		  	console.log(store);
 		    setTimeout(function() {
 		      done();
@@ -97,6 +97,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 		
 		it("Songs has been loaded and saved", function(done) {
+			console.log(store);
 			expect(store).toBeDefined();
 			expect(store.getStoreId()).toBe('Songs');
 			var savedStore = Muzic.util.FileRead.getStore();
@@ -126,7 +127,36 @@ describe("Muzic.util.FileRead", function () {
 		});
 	});
 
-
+	describe("Model to store adder", function () {
+		var store;
+		beforeEach(function(done) {
+			console.log("before");
+			jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+		  	store = Muzic.util.FileRead.requestStore('Songs');
+		  	console.log(store);
+		    setTimeout(function() {
+		      done();
+		    }, 3000);
+		});
+		it("has stored our model to the store", function() {
+			Muzic.util.FileRead.addModelToStore(Muzic.util.FileRead.createModel( { filepath : 'samplepath' } ), store);
+			console.log(store.data.all);
+			var data = store.data.all;
+			expect(data).toBeDefined();
+			var lastItem = data[data.length - 1].data;
+			expect(lastItem).toBeDefined();
+			expect(lastItem.filepath).toMatch('samplepath');
+			//done();
+		});
+		it("should fail but keep existing data intact", function() {
+			Muzic.util.FileRead.addModelToStore(undefined, store);
+			var data = store.data.all;
+			var lastItem = data[data.length - 1].data;
+			expect(lastItem.filepath).toMatch('samplepath');
+			//done();
+		});
+		
+	});
 
 });
 
