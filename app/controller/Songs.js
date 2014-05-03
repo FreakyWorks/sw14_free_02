@@ -29,8 +29,8 @@ Ext.define('Muzic.controller.Songs', {
 		console.log("da");
 		//alert("h");
 		console.log("s" + Ext.browser.is.PhoneGap);
-		//alert(device.uuid);
 		Muzic.util.FileRead.requestOurFS();
+		Muzic.util.FileRead.requestDir();
 
 	},
 	
