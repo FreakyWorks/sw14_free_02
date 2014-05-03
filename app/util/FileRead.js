@@ -74,9 +74,17 @@ Ext.define('Muzic.util.FileRead', {
 			return undefined;
 		}
 	},
+	
+	createObject : function (entryCounter) {
+		if (entryCounter >= Muzic.util.FileRead.getDirEntries().length) {
+			return;
+		}
+		else {
+			return { filepath : this.getDirEntries()[entryCounter].nativeURL };
+		}
+	},
+	
 
-	
-	
 	
 	//Our error handlers
 	didntGetFileSystem : function (err) {
