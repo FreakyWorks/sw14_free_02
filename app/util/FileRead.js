@@ -61,9 +61,11 @@ Ext.define('Muzic.util.FileRead', {
 	
 	//Directory successfully requested
 	gotDirectory : function (directory) {
-		console.log("gotDir");
+		console.log("gotDirectory");
 		Muzic.util.FileRead.setDir(Muzic.util.FileRead.getDir().concat(directory));
 		console.log(directory);
+		//TODO may change
+		Muzic.util.FileRead.requestEntries(Muzic.util.FileRead.getDir().length - 1);
 	},
 	
 	
@@ -101,7 +103,7 @@ Ext.define('Muzic.util.FileRead', {
 			return;
 		}
 		else {
-			return { filepath : this.getDirEntries()[entryCounter].nativeURL };
+			return { filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL };
 		}
 	},
 	
@@ -114,20 +116,33 @@ Ext.define('Muzic.util.FileRead', {
 	},
 	
 	addModelToStore : function (model, store) {
-		if (model === undefined || store === undefined) {
+		console.log("er");
+		if ((model === undefined) || (store === undefined)) {
 			return;
 		}
+		console.log("fds");
+		console.log("adding" + model);
 		store.add(model);
 	},
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	addAllEntriesToStore : function (storeName) {
+		var store, fileObject, model;
+		if ((store = Muzic.util.FileRead.requestStore(storeName)) === undefined) {
+			return;
+		}
+		for(counter = 0; counter < Muzic.util.FileRead.getDirEntries().length; counter++) {
+			fileObject = Muzic.util.FileRead.createObject(counter);
+			console.log(fileObject);
+			if(fileObject !== undefined) {
+				model = Muzic.util.FileRead.createModel(fileObject);
+				console.log(model);
+				if(model !== undefined) {
+					Muzic.util.FileRead.addModelToStore(model, store);
+				}
+			}
+		}
+	},
+
 	//Our error handlers
 	didntGetFileSystem : function (err) {
 		//TODO show fail to user
