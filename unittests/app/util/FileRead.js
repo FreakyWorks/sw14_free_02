@@ -32,7 +32,7 @@ describe("Muzic.util.FileRead", function () {
 			var dir = Muzic.util.FileRead.getDir();
 			console.log(dir);
 		    expect(dir).toBeDefined();
-		    expect(Muzic.util.FileRead.getDir().name).toBe('Music');
+		    expect(Muzic.util.FileRead.getDir()[0].name).toBe('Music');
 			done();
 		});
 		
@@ -44,7 +44,7 @@ describe("Muzic.util.FileRead", function () {
 	//TODO try to merge it now
 	describe("Directory Reader", function () {
 		 beforeEach(function(done) {
-		  	Muzic.util.FileRead.requestEntries();
+		  	Muzic.util.FileRead.requestEntries(Muzic.util.FileRead.getDir().length - 1);
 		    setTimeout(function() {
 		      done();
 		    }, 2000);
@@ -54,6 +54,8 @@ describe("Muzic.util.FileRead", function () {
 			var dirEntries = Muzic.util.FileRead.getDirEntries();
 			console.log(dirEntries);
 		    expect(dirEntries).toBeDefined();
+		    expect(dirEntries.length).toBeGreaterThan(0);
+		    expect(dirEntries[dirEntries.length - 1]).toBeDefined();
 		    expect(dirEntries).toContain(jasmine.objectContaining({
 	      		isFile: true
 	    	}));
@@ -100,6 +102,9 @@ describe("Muzic.util.FileRead", function () {
 			done();
 		});
 	});
+	
+	
+
 
 
 });
