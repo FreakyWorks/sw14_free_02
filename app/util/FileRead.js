@@ -5,7 +5,8 @@ Ext.define('Muzic.util.FileRead', {
 	config : {
         fileSys : undefined,
         dir: [],
-        dirEntries: []
+        dirEntries: [],
+        store : undefined
    },
    
 	constructor : function(config) {
@@ -68,7 +69,9 @@ Ext.define('Muzic.util.FileRead', {
 	
 	getStore : function (storeName) {
 		if(storeName !== undefined && storeName !== null && storeName.length > 0) {
-			return Ext.getStore(storeName);
+			var store = Ext.getStore(storeName);
+			Muzic.util.FileRead.setStore(store);
+			return store;
 		}
 		else {
 			return undefined;
