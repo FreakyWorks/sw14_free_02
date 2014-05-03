@@ -33,6 +33,7 @@ Ext.define('Muzic.util.FileRead', {
 	
 	//Request a directory, path should be relative to root
 	requestDir : function (folder) {
+
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
 		fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
@@ -62,7 +63,14 @@ Ext.define('Muzic.util.FileRead', {
 		Muzic.util.FileRead.setDirEntries(entries);
 	},
 	
-	
+	getStore : function (storeName) {
+		if(storeName !== undefined && storeName !== null && storeName.length > 0) {
+			return Ext.getStore(storeName);
+		}
+		else {
+			return undefined;
+		}
+	},
 	
 	
 	
