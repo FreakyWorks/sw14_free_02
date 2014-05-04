@@ -114,7 +114,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 		it("should return recognized ending", function() {
 			var recognizedEndings = Muzic.util.FileRead.getRecognizedEndings();
-			for(counter = 0; counter < recognizedEndings.length; counter++) {
+			for(var counter = 0; counter < recognizedEndings.length; counter++) {
 				var ourFilename = 'some name' + recognizedEndings[counter];
 				var endingSupported = Muzic.util.FileRead.checkEnding(ourFilename);
 				expect(endingSupported).toBeTruthy();
@@ -122,7 +122,7 @@ describe("Muzic.util.FileRead", function () {
 		});
 		it("should NOT return recognized ending", function() {
 			var recognizedEndings = Muzic.util.FileRead.getRecognizedEndings();
-			for(counter = 0; counter < recognizedEndings.length; counter++) {
+			for(var counter = 0; counter < recognizedEndings.length; counter++) {
 				var ourFilename = 'some name' + recognizedEndings[counter] + '.weird';
 				var endingSupported = Muzic.util.FileRead.checkEnding(ourFilename);
 				expect(endingSupported).toBeFalsy();

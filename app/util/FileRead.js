@@ -7,6 +7,7 @@ Ext.define('Muzic.util.FileRead', {
         dir: [],
         dirEntries: [],
         store : undefined,
+        recognizedEndings : ['mp3'],
         tryCounter: 0
    },
    
@@ -98,12 +99,41 @@ Ext.define('Muzic.util.FileRead', {
 		}
 	},
 	
+	checkEnding : function (fileName) {
+		if(fileName === undefined) {
+			return;
+		}
+		var currentEnding;
+		var begin, end;
+		var endings = Muzic.util.FileRead.getRecognizedEndings();
+		
+		for (var counter = 0; counter < endings.length; counter++) {
+			currentEnding = endings[counter];
+			begin = fileName.length - currentEnding.length;
+			end = fileName.length - 1;
+			console.log(fileName.substr(begin, end));
+			
+			if(fileName.substr(begin, end) === currentEnding) {
+				return true;
+			}
+		}
+		return false;
+	},
+	
 	createObject : function (entryCounter) {
 		if (entryCounter >= Muzic.util.FileRead.getDirEntries().length) {
+			console.log('wrong length');
 			return;
 		}
 		else {
-			return { filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL };
+			if(!(Muzic.util.FileRead.checkEnding(Muzic.util.FileRead.getDirEntries()[entryCounter].name))) {
+				console.log('wrong ending');
+				return;
+			}
+			return { 
+					title : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
+					filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL
+				};
 		}
 	},
 	
@@ -118,9 +148,9 @@ Ext.define('Muzic.util.FileRead', {
 	addModelToStore : function (model, store) {
 		console.log("er");
 		if ((model === undefined) || (store === undefined)) {
+			console.log('returned undefined because model or store is undefined');
 			return;
 		}
-		console.log("fds");
 		console.log("adding" + model);
 		store.add(model);
 	},
@@ -128,11 +158,11 @@ Ext.define('Muzic.util.FileRead', {
 	addAllEntriesToStore : function (storeName) {
 		var store, fileObject, model;
 		if ((store = Muzic.util.FileRead.requestStore(storeName)) === undefined) {
+			console.log('store name does not exist');
 			return;
 		}
-		for(counter = 0; counter < Muzic.util.FileRead.getDirEntries().length; counter++) {
+		for(var counter = 0; counter < Muzic.util.FileRead.getDirEntries().length; counter++) {
 			fileObject = Muzic.util.FileRead.createObject(counter);
-			console.log(fileObject);
 			if(fileObject !== undefined) {
 				model = Muzic.util.FileRead.createModel(fileObject);
 				console.log(model);
@@ -142,6 +172,8 @@ Ext.define('Muzic.util.FileRead', {
 			}
 		}
 	},
+	
+	
 
 	//Our error handlers
 	didntGetFileSystem : function (err) {
