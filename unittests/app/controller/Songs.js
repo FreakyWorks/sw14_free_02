@@ -7,18 +7,21 @@ describe('Muzic.controller.Songs', function () {
     controller.launch();
   });
 
-  it('should stop playing', function () {
+  it('should start playing', function () {
   	//var audio = Ext.create('Ext.Audio');
   	//audio.setUrl('file:///storage/sdcard/Music/crash.mp3');
-  	controller.getAudioPlayer().play();
+  	console.log(controller);
   	console.log(controller.getAudioPlayer());
   	console.log(controller.getAudioPlayer().isPlaying());
-  	console.log(controller);
+  	
     controller.toggleAudioPlayback(controller.getAudioPlayer());
+    
     console.log(controller.getAudioPlayer());
     console.log(controller.getAudioPlayer().isPlaying());
-    console.log("ende");
-    expect(controller.getAudioPlayer().isPlaying()).toBeFalsy;
+    expect(controller.toggleAudioPlayback(controller.getAudioPlayer())).toBeTruthy;
+    
+    console.log(controller.getPauseButton().getText());
+    expect(controller.getPauseButton().getText()).toMatch('Play');
     /*expect(controller.onPauseButtonTap).toEqual('Muzic.model.Song');
     expect(order.phantom).toBeTruthy();*/
   });
