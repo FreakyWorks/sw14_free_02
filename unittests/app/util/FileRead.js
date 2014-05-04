@@ -107,6 +107,28 @@ describe("Muzic.util.FileRead", function () {
 		});
 	});
 	
+	describe("Endings checker", function () {
+		it("should return undefined", function() {
+			expect(Muzic.util.FileRead.checkEnding(undefined)).toBeUndefined();
+			
+		});
+		it("should return recognized ending", function() {
+			var recognizedEndings = Muzic.util.FileRead.getRecognizedEndings();
+			for(counter = 0; counter < recognizedEndings.length; counter++) {
+				var ourFilename = 'some name' + recognizedEndings[counter];
+				var endingSupported = Muzic.util.FileRead.checkEnding(ourFilename);
+				expect(endingSupported).toBeTruthy();
+			}
+		});
+		it("should NOT return recognized ending", function() {
+			var recognizedEndings = Muzic.util.FileRead.getRecognizedEndings();
+			for(counter = 0; counter < recognizedEndings.length; counter++) {
+				var ourFilename = 'some name' + recognizedEndings[counter] + '.weird';
+				var endingSupported = Muzic.util.FileRead.checkEnding(ourFilename);
+				expect(endingSupported).toBeFalsy();
+			}
+		});
+	});	
 	
 	describe("Object Creator", function () {
 		it("has returned our object", function() {
