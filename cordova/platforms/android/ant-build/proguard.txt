@@ -1,3 +1,6 @@
 # view AndroidManifest.xml #generated:6
 -keep class com.freakyworks.muzic.Muzic { <init>(...); }
 
+# view AndroidManifest.xml #generated:12
+-keep class org.pgsqlite.SQLitePlugin { <init>(...); }
+

@@ -1,4 +1,7 @@
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes.dex : \
+/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/pgsqlite/SQLitePlugin.class \
+/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/pgsqlite/SQLitePlugin$2.class \
+/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/pgsqlite/SQLitePlugin$1.class \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$9.class \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$10.class \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$14.class \

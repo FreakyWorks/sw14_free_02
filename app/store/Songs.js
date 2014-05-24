@@ -6,11 +6,11 @@ Ext.define('Muzic.store.Songs', {
         model: 'Muzic.model.Song',
         //for testing:
         data : [
-        	{title: 'mysong', album: 'myalbum', filepath: ''},
+        	/*{title: 'mysong', album: 'myalbum', filepath: ''},
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
-        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'}
+        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'}*/
         ]
     }
 });

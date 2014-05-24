@@ -43,6 +43,46 @@
 			"path": "cordova.js",
 			"remote": true
 		},
+		{
+			"path": "idv3full/binaryfile.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/bufferedbinaryajax.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/filereader.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/id3.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/id3v1.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/id3v2.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/id3v2frames.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/id4.js",
+			"remote": true
+		},
+		{
+			"path": "idv3full/stringutils.js",
+			"remote": true
+		},	
+        {
+            "path": "SQLitePlugin.js",
+            "remote": true
+        },
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
