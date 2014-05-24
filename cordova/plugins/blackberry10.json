@@ -47,6 +47,9 @@
         },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.freakyworks.muzic"
+        },
+        "com.phonegap.plugins.sqlite": {
+            "PACKAGE_NAME": "com.freakyworks.muzic"
         }
     },
     "dependent_plugins": {}
