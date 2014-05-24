@@ -12,7 +12,7 @@ describe("Muzic.util.Database", function () {
 	describe("Table creator", function () {
 	    it("has created our tables", function () {
 	    	Muzic.util.Database.createTables();
-	    	myDb = Muzic.util.Database.getDatabase();
+	    	var myDb = Muzic.util.Database.getDatabase();
 	    	myDb.transaction(function (tx) {
 				tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='songs_table';", [], function (tx, results) {
 					console.log(results);
@@ -23,16 +23,32 @@ describe("Muzic.util.Database", function () {
 	});
 	
 	describe("Song inserter", function () {
-	    it("has inserted a song", function () {
-	    	Muzic.util.Database.addEntry("MySong", "file:///mypath/mysong.mp3");
-	    	myDb = Muzic.util.Database.getDatabase();
-	    	myDb.transaction(function (tx) {
+		var old_occurences = 0;
+		var entries_to_add = 10;
+		  beforeEach(function(done) {
+		  		var myDb = Muzic.util.Database.getDatabase();
+				myDb.transaction(function (tx) {
+						tx.executeSql("SELECT * FROM songs_table WHERE title='MySong';", [], function (tx, results) {
+							console.log(results);
+							old_occurences = results.rows.length;
+						}, null);
+				});
+		    	for(var counter = 0; counter < entries_to_add; counter++) {
+		    		Muzic.util.Database.addEntry("MySong", "file:///mypath/mysong.mp3");
+		    	}
+			    setTimeout(function() {
+			      done();
+			    }, 2000);
+		  });
+		it("has inserted ten songs", function () {
+			var myDb = Muzic.util.Database.getDatabase();
+			myDb.transaction(function (tx) {
 				tx.executeSql("SELECT * FROM songs_table WHERE title='MySong';", [], function (tx, results) {
 					console.log(results);
-					expect(results.rows.length).toBeGreaterThan(0);
+					expect(results.rows.length - old_occurences).toBe(entries_to_add);
 				}, null);
 			});
-	    });
+		});
 	});
 });
 

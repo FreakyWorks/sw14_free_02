@@ -25,7 +25,20 @@ Ext.define('Muzic.util.Database', {
 		//TODO add table for artist, album if id3 reader works
       });
 	},
-
+	
+	addEntry: function (new_title, new_filepath) {
+		if (Muzic.util.Database.getDatabase() == undefined) {
+			Muzic.util.Database.openDB();
+		}
+		myDb = Muzic.util.Database.getDatabase();
+		myDb.transaction(function(tx) {
+        
+        tx.executeSql("INSERT INTO songs_table(title, filepath) VALUES (?, ?)",
+	        [new_title, new_filepath],
+	        function(){ /* SUCCESS */},
+	        function(){ /* FAIL */});
+      });
+	}
 
 
 });
