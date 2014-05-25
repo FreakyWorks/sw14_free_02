@@ -10,7 +10,6 @@ Ext.define('Muzic.util.FileRead', {
         fileSys : undefined,
         dir: [],
         dirEntries: [],
-        store : undefined,
         recognizedEndings : ['mp3'],
         tryCounter: 0
    },
@@ -90,17 +89,6 @@ Ext.define('Muzic.util.FileRead', {
 		console.log('got entries');
 		console.log(entries);
 		Muzic.util.FileRead.setDirEntries(Muzic.util.FileRead.getDirEntries().concat(entries));
-	},
-	
-	requestStore : function (storeName) {
-		if(storeName !== undefined && storeName !== null && storeName.length > 0) {
-			var store = Ext.getStore(storeName);
-			Muzic.util.FileRead.setStore(store);
-			return store;
-		}
-		else {
-			return undefined;
-		}
 	},
 	
 	checkEnding : function (fileName) {
