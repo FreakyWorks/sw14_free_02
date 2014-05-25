@@ -55,6 +55,7 @@ describe("Muzic.util.Database", function () {
 			      done();
 			    }, 2000);
 		  });
+		
 		it("has inserted two tracks with MySong as title", function () {
 			var myDb = Muzic.util.Database.getDatabase();
 			myDb.transaction(function (tx) {
