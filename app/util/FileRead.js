@@ -2,6 +2,10 @@ Ext.define('Muzic.util.FileRead', {
 
 	singleton: true,
 	autoDestroy: false,
+    requires: [
+    	'Muzic.util.Database'
+    ],
+   
 	config : {
         fileSys : undefined,
         dir: [],
@@ -120,6 +124,69 @@ Ext.define('Muzic.util.FileRead', {
 		return false;
 	},
 	
+	addAllEntriesToDB : function () {
+		var fileObject = undefined;
+		for(var counter = 0; counter < Muzic.util.FileRead.getDirEntries().length; counter++) {
+			fileObject = Muzic.util.FileRead.createObject(counter);
+			if(fileObject !== undefined) {
+				Muzic.util.Database.addEntry((fileObject.title || ""), (fileObject.artist || ""), (fileObject.filepath || ""));
+			}
+		}
+	},
+	
+	checkIfFileExists : function (nativeURL, fileExistsCallback, fileDoesntExistCallback) {
+		console.log("checking if file exists");
+		window.resolveLocalFileSystemURL(nativeURL,
+			fileExistsCallback, fileDoesntExistCallback(nativeURL));
+	},
+	
+	fileExists : function(fileEntry) {
+		console.log("FileExists");
+		console.log(fileEntry);
+	},
+	
+	fileDoesntExist : function(nativeURL) {
+		console.log("FileDOESTNExists");
+		console.log(nativeURL);
+	},
+	
+	
+	loadID3Tag : function (fileEntry) {
+		
+		/*ID3.loadTags("http://media.aaspeakers.org/download.php?file_id=b04b8a3e62f81a615317b00f5abaec2d&save=Dr.%20Harry%20T.%20from%20New%20York%20-%20Anonymity%20The%20Ego%20Reducer%20in%20St.%20Louis%2C%20MO%20on%20%2807-05-1955%29.mp3", function() {
+		    var tags = ID3.getAllTags("http://media.aaspeakers.org/download.php?file_id=b04b8a3e62f81a615317b00f5abaec2d&save=Dr.%20Harry%20T.%20from%20New%20York%20-%20Anonymity%20The%20Ego%20Reducer%20in%20St.%20Louis%2C%20MO%20on%20%2807-05-1955%29.mp3");
+		    console.log(tags.artist + " - " + tags.title + ", " + tags.album);
+		},
+		{
+		onError: function(reason) {
+			console.log(reason);
+       }
+    });*/
+   		fileEntry.file(Muzic.util.FileRead.gotID3File, Muzic.util.FileRead.errorID3);
+
+	},
+	
+	gotID3File : function (file) {
+		console.log(file);
+		console.log("loading tags?");
+		setTimeout(function () {
+		ID3.loadTags(file.localURL, function() {
+			console.log("loaded tags!");
+		    var tags = ID3.getAllTags(file.localURL);
+		    console.log(tags);
+		    console.log(tags.comment + " - " + tags.track + ", " + tags.lyrics);
+		    ID3.clearAll();
+		}, {
+		    dataReader: FileAPIReader(file)
+		});
+	}, 1000);
+
+	},
+	
+	errorID3 : function (error) {
+		console.log("Unable to retrieve file properties: " + error.code);
+	},
+	
 	createObject : function (entryCounter) {
 		if (entryCounter >= Muzic.util.FileRead.getDirEntries().length) {
 			console.log('wrong length');
@@ -130,49 +197,14 @@ Ext.define('Muzic.util.FileRead', {
 				console.log('wrong ending');
 				return;
 			}
+			//Muzic.util.FileRead.loadID3Tag(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			return { 
 					title : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
+					artist: Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
 					filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL
-				};
+		    };
 		}
 	},
-	
-	createModel : function (object) {
-		if (object === undefined) {
-			return;
-		}
-		var model = Ext.create('Muzic.model.Song', object);
-		return model;
-	},
-	
-	addModelToStore : function (model, store) {
-		console.log("er");
-		if ((model === undefined) || (store === undefined)) {
-			console.log('returned undefined because model or store is undefined');
-			return;
-		}
-		console.log("adding" + model);
-		store.add(model);
-	},
-	
-	addAllEntriesToStore : function (storeName) {
-		var store, fileObject, model;
-		if ((store = Muzic.util.FileRead.requestStore(storeName)) === undefined) {
-			console.log('store name does not exist');
-			return;
-		}
-		for(var counter = 0; counter < Muzic.util.FileRead.getDirEntries().length; counter++) {
-			fileObject = Muzic.util.FileRead.createObject(counter);
-			if(fileObject !== undefined) {
-				model = Muzic.util.FileRead.createModel(fileObject);
-				console.log(model);
-				if(model !== undefined) {
-					Muzic.util.FileRead.addModelToStore(model, store);
-				}
-			}
-		}
-	},
-	
 	
 
 	//Our error handlers
