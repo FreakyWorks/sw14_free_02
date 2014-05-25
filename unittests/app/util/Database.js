@@ -24,29 +24,23 @@ describe("Muzic.util.Database", function () {
 					console.log(results);
 					expect(results.rows.length).toBe(1);
 				}, function() {
-					expect(0).toBe(1);
+					expect(results.rows.length).toBe(1);
 				});
 				tx.executeSql("SELECT name FROM sqlite_master WHERE type='table' AND name='artists_table';", [], function (tx, results) {
 					console.log(results);
 					expect(results.rows.length).toBe(1);
 				}, function() {
-					expect(0).toBe(1);
+					expect(results.rows.length).toBe(1);
 				});
 			});
 	    });
 	});
 	
 	describe("Song inserter", function () {
-		var old_occurences = 0;
 		var entries_to_add = 10;
 		  beforeEach(function(done) {
 		  		var myDb = Muzic.util.Database.getDatabase();
-				myDb.transaction(function (tx) {
-						tx.executeSql("SELECT * FROM songs_table WHERE title='MySong' AND artist_name='MyArtist';", [], function (tx, results) {
-							console.log(results);
-							old_occurences = results.rows.length;
-						}, null);
-				});
+		  		
 		    	for(var counter = 0; counter < entries_to_add; counter++) {
 		    		Muzic.util.Database.addEntry("MySong", "MyArtist", "file:///mypath/mysong.mp3");
 		    	}
@@ -96,17 +90,18 @@ describe("Muzic.util.Database", function () {
 
 	});
 	
-	
-	
-	
-	
-	
+
 	
 	describe("Song deleter", function () {
-		
+		var old_number_of_artists = undefined;
 		  beforeEach(function(done) {
 		  		var myDb = Muzic.util.Database.getDatabase();
-				
+				myDb.transaction(function (tx) {
+						tx.executeSql("SELECT * FROM artists_table WHERE artist_name='Another Artist';", [], function (tx, results) {
+							console.log(results);
+							old_occurences = results.rows.length;
+						}, null);
+				});
 				Muzic.util.Database.deleteEntry("file:///mypath/mysong1.mp3");
 				
 			    setTimeout(function() {
@@ -125,6 +120,12 @@ describe("Muzic.util.Database", function () {
 				}, function(err) {
 					console.log(err);
 					expect(results.rows.length).toBe(1);
+				});
+				myDb.transaction(function (tx) {
+						tx.executeSql("SELECT * FROM artists_table WHERE artist_name='Another Artist';", [], function (tx, results) {
+							console.log(results);
+							expect(old_occurences - results.rows.length).toBe(1);
+						}, null);
 				});
 			});
 		});
