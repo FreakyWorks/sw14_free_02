@@ -1,5 +1,5 @@
 Ext.require('Muzic.util.FileRead');
-
+Ext.require('Muzic.util.Database');
 
 describe("Muzic.util.FileRead", function () {
 	describe("Filesytem", function () {
@@ -128,7 +128,26 @@ describe("Muzic.util.FileRead", function () {
 				expect(endingSupported).toBeFalsy();
 			}
 		});
-	});	
+	});
+	
+	
+	
+	describe("File exists checker", function () {
+		beforeEach(function() {
+		   spyOn(Muzic.util.Database, 'deleteEntry');
+		   var dirEntries = Muzic.util.FileRead.getDirEntries();
+		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL, undefined, Muzic.util.Database.deleteEntry);
+		   Muzic.util.FileRead.checkIfFileExists("file://fake/Path", undefined, Muzic.util.Database.deleteEntry);
+		    setTimeout(function() {
+		      done();
+		    }, 2000);
+		});
+		
+		it("has called deleter (our callback)", function() {
+			expect(Muzic.util.Database.deleteEntry).toHaveBeenCalled();
+		});
+	});
+	
 	
 	describe("Object Creator", function () {
 		it("has returned our object", function() {
@@ -227,8 +246,8 @@ describe("Muzic.util.FileRead", function () {
 			var previousItem = data[data.length - 2].data;
 			var lastItem = data[data.length - 1].data;
 			//Expecting that folder contains both crash.mp3 and crash1.mp3
-			expect(previousItem.filepath).toMatch('crash.mp3');
-			expect(lastItem.filepath).toMatch('crash1.mp3');
+			expect(previousItem.filepath).toMatch('link.mp3');
+			//expect(lastItem.filepath).toMatch('crash1.mp3'); //TODO change to search through all files
 			//done();
 		});
 	});
