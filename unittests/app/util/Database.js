@@ -95,5 +95,52 @@ describe("Muzic.util.Database", function () {
 		});
 
 	});
+	
+	
+	
+	
+	
+	
+	
+	describe("Song deleter", function () {
+		
+		  beforeEach(function(done) {
+		  		var myDb = Muzic.util.Database.getDatabase();
+				
+				Muzic.util.Database.deleteEntry("file:///mypath/mysong1.mp3");
+				
+			    setTimeout(function() {
+			      done();
+			    }, 2000);
+		  });
+		
+		
+		it("has deleted our second insert", function () {
+			var myDb = Muzic.util.Database.getDatabase();
+			myDb.transaction(function (tx) {
+				tx.executeSql("SELECT * FROM songs_table WHERE title='MySong';", [], function (tx, results) {
+					console.log("Got result");
+					console.log(results);
+					expect(results.rows.length).toBe(1);
+				}, function(err) {
+					console.log(err);
+					expect(results.rows.length).toBe(1);
+				});
+			});
+		});
+
+
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });
 
