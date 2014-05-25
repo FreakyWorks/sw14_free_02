@@ -21,19 +21,9 @@ Ext.define('Muzic.util.Database', {
 		}
 		var myDb = Muzic.util.Database.getDatabase();
 		myDb.transaction(function(tx) {
-        
-		tx.executeSql('CREATE TABLE IF NOT EXISTS artists_table(artist_id integer primary key, artist_name text unique);'/*,
-		        function(tx, results) {
-		        	console.log("Created artists_table");
-		        	console.log(tx);
-		        	console.log(results);
-		        	tx.executeSql('CREATE TABLE IF NOT EXISTS songs_table(song_id integer primary key, FOREIGN KEY(song_artist) REFERENCES artists_table(artist_id), title text, filepath text, UNIQUE(song_artist, title, filepath))');
-	        	},
-		        function(err) {
-		        	console.log("Creating artists_table failed");
-		        	console.log(err);
-	        	}*/);
-	        	tx.executeSql('CREATE TABLE IF NOT EXISTS songs_table(song_id integer primary key, song_artist_id integer , title text, filepath text, FOREIGN KEY(song_artist_id) REFERENCES artists_table(artist_id), UNIQUE(song_artist_id, title, filepath));');
+        tx.executeSql('PRAGMA foreign_keys = ON;');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS artists_table(artist_id integer primary key, artist_name text unique);');
+	    tx.executeSql('CREATE TABLE IF NOT EXISTS songs_table(song_id integer primary key, song_artist_id integer , title text, filepath text, FOREIGN KEY(song_artist_id) REFERENCES artists_table(artist_id), UNIQUE(song_artist_id, title, filepath));');
 		//TODO add table for album if id3 reader works
       });
 	},
@@ -42,7 +32,7 @@ Ext.define('Muzic.util.Database', {
 		if (Muzic.util.Database.getDatabase() == undefined) {
 			Muzic.util.Database.openDB();
 		}
-		myDb = Muzic.util.Database.getDatabase();
+		var myDb = Muzic.util.Database.getDatabase();
 		myDb.transaction(function(tx) {
         
 	        tx.executeSql("INSERT OR IGNORE INTO artists_table(artist_name) VALUES (?);",
