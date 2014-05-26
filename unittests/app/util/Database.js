@@ -220,26 +220,60 @@ describe("Muzic.util.Database", function () {
 	
 	
 	describe("addAllEntriesToStore", function () {
+		var songs_count = undefined;
 		beforeEach(function(done) {
 			console.log("before");
 			jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+			var myDb = Muzic.util.Database.getDatabase();
+			myDb.transaction(function (tx) {
+				tx.executeSql("SELECT * FROM songs_table;", [], function (tx, results) {
+					console.log("Got result");
+					console.log(results);
+					songs_count = results.rows.length;
+				}, function(err) {
+					console.log(err);
+					expect(results.rows.length).toBe(1);
+				});
+			});
 		  	//Muzic.util.Database.requestDir('Music');
 		    setTimeout(function() {
 		      done();
 		    }, 3000);
 		});
-		it("has stored all entries to the store", function() {
-			console.log("hier");
-			Muzic.util.Database.addAllEntriesToStore('Songs');
+		
+		
+		it("has added all entries to the store", function() {
+			Muzic.util.Database.addAllEntriesToStore('Songs', false);
 			var data = Muzic.util.Database.getStore().data.all;
 			var previousItem = data[data.length - 2].data;
 			var lastItem = data[data.length - 1].data;
+			expect(Muzic.util.Database.getStore().getCount()).toBeGreaterThan(0);
+			
 			//Expecting that folder contains both crash.mp3 and crash1.mp3
-			expect(previousItem.filepath).toMatch('link.mp3');
+			//expect(previousItem.filepath).toMatch('link.mp3');
+			//expect(lastItem.filepath).toMatch('crash1.mp3'); //TODO change to search through all files
+			//done();
+		});
+		
+		it("has deleted old entries and stored new entries to the store", function() {
+			Muzic.util.Database.addAllEntriesToStore('Songs', true);
+			var data = Muzic.util.Database.getStore().data.all;
+			var previousItem = data[data.length - 2].data;
+			var lastItem = data[data.length - 1].data;
+			console.log("Songs count: " + songs_count);
+			expect(Muzic.util.Database.getStore().getCount()).toBe(songs_count);
+			
+			//Expecting that folder contains both crash.mp3 and crash1.mp3
+			//expect(previousItem.filepath).toMatch('link.mp3');
 			//expect(lastItem.filepath).toMatch('crash1.mp3'); //TODO change to search through all files
 			//done();
 		});
 	});
+	
+	/*describe("addAllEntriesToStore", function () {
+
+
+	});*/
 	
 	
 	describe("Store", function () {
