@@ -22,11 +22,13 @@ describe('Muzic.model.Song', function() {
   	it('returns test data correctly', function () {
 	  var model = Ext.create('Muzic.model.Song', {
 	    title: 'Jasmine',
+	    artist: 'Sencha',
 	    album: 'ExtJS',
 	    filepath: '/dev/null'
 	  });
 	  expect(model.get('title')).toEqual('Jasmine');
 	  expect(model.get('album')).toEqual('ExtJS');
+	  expect(model.get('artist')).toEqual('Sencha');
 	  expect(model.get('filepath')).toEqual('/dev/null');
 	  expect(model.get('alreadyHeard')).toEqual(false);
 	});

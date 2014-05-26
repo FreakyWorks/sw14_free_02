@@ -4,11 +4,11 @@ describe('Muzic.view.titles.Card', function () {
   it("has a list of tracks", function () {
     var store = Ext.create('Muzic.store.Songs', {
     	data: [
-			{title: 'mysong', album: 'myalbum', filepath: ''},
-        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
-        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
-        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
-        	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'}
+			{title: 'mysong', artist:'myartist', album: 'myalbum', filepath: ''},
+        	{title: 'mysong', artist:'myartist', album: 'myalbum', filepath: 'store/ersdf/esrs'},
+        	{title: 'mysong', artist:'myartist', album: 'myalbum', filepath: 'store/ersdf/esrs'},
+        	{title: 'mysong', artist:'myartist', album: 'myalbum', filepath: 'store/ersdf/esrs'},
+        	{title: 'mysong', artist:'myartist', album: 'myalbum', filepath: 'store/ersdf/esrs'}
     	]
     });
     console.log(store);
