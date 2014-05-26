@@ -96,8 +96,8 @@ describe("Muzic.util.FileRead", function () {
 		beforeEach(function() {
 		   spyOn(Muzic.util.Database, 'deleteEntry');
 		   var dirEntries = Muzic.util.FileRead.getDirEntries();
-		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL, undefined, Muzic.util.Database.deleteEntry);
-		   Muzic.util.FileRead.checkIfFileExists("file://fake/Path", undefined, Muzic.util.Database.deleteEntry);
+		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL);
+		   Muzic.util.FileRead.checkIfFileExists("file://fake/Path");
 		    setTimeout(function() {
 		      done();
 		    }, 2000);

@@ -134,7 +134,18 @@ describe("Muzic.util.Database", function () {
 	});
 	
 	
-	
+	describe("Database entries checker", function () {
+		beforeEach(function(done) {
+		  	spyOn(Muzic.util.FileRead, 'checkIfFileExists');
+		  	Muzic.util.Database.checkIfAllDBEntriesExist();
+		    setTimeout(function() {
+		      done();
+		    }, 2000);
+		});
+		it("has called our file checker", function() {
+			expect(Muzic.util.FileRead.checkIfFileExists).toHaveBeenCalled();
+		});
+	});
 	
 	describe("Model Creator", function () {
 		it("has returned our model", function() {
@@ -229,7 +240,6 @@ describe("Muzic.util.Database", function () {
 			//done();
 		});
 	});
-	
 	
 	
 	describe("Store", function () {
