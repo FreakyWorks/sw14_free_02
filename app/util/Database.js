@@ -59,9 +59,6 @@ Ext.define('Muzic.util.Database', {
 			        	console.log("creating new song failed: "  + new_title + new_filepath + new_artist);
 			        });    
 		});
-		
-		
-
 	},
 	
 	deleteEntry : function (fullpath) {
@@ -106,7 +103,25 @@ Ext.define('Muzic.util.Database', {
 		});
 	},
 	
-	addAllEntriesToStore : function (storeName) {
+	checkIfAllDBEntriesExist : function () {
+		var myDb = Muzic.util.Database.getDatabase();
+    	myDb.transaction(function (tx) {
+			tx.executeSql("SELECT filepath FROM songs_table;", [], function (tx, results) {
+				console.log("Loaded filepaths");
+				console.log(results);
+				rs = results;
+				for (var counter = 0; counter < results.rows.length; counter++) {
+					console.log(results.rows.item(counter).filepath);
+					Muzic.util.FileRead.checkIfFileExists(results.rows.item(counter).filepath, null, Muzic.util.Database.deleteEntry);
+				}
+			}, function() {
+				console.log("Could not check entries");
+			});
+		});
+		
+	},
+	
+	addAllEntriesToStore : function (storeName, deleteExistingStore) {
 		var store, fileObject, model;
 		if ((store = Muzic.util.Database.requestStore(storeName)) === undefined) {
 			console.log('store name does not exist');
@@ -114,6 +129,9 @@ Ext.define('Muzic.util.Database', {
 		}
 		if (Muzic.util.Database.getDatabase() === undefined) {
 			Muzic.util.Database.openDB();
+		}
+		if (deleteExistingStore) {
+			store.removeAll();
 		}
 		var myDb = Muzic.util.Database.getDatabase();
 		
@@ -139,8 +157,6 @@ Ext.define('Muzic.util.Database', {
 				console.log(err);
 			});
 		});
-		
-
 	},
 
 	createObject : function (db_item) {

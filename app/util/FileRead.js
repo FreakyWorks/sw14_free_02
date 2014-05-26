@@ -122,20 +122,17 @@ Ext.define('Muzic.util.FileRead', {
 		}
 	},
 	
-	checkIfFileExists : function (nativeURL, fileExistsCallback, fileDoesntExistCallback) {
+	checkIfFileExists : function (nativeURL) {
 		console.log("checking if file exists");
 		window.resolveLocalFileSystemURL(nativeURL,
-			fileExistsCallback, fileDoesntExistCallback(nativeURL));
+			Muzic.util.FileRead.fileExists, function () {
+				Muzic.util.Database.deleteEntry(nativeURL);
+			});
 	},
 	
 	fileExists : function(fileEntry) {
 		console.log("FileExists");
 		console.log(fileEntry);
-	},
-	
-	fileDoesntExist : function(nativeURL) {
-		console.log("FileDOESTNExists");
-		console.log(nativeURL);
 	},
 	
 	
