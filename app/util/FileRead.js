@@ -172,6 +172,11 @@ Ext.define('Muzic.util.FileRead', {
 		console.log("Unable to retrieve file properties: " + error.code);
 	},
 	
+	trimString : function (str) {
+		//http://blog.stevenlevithan.com/archives/faster-trim-javascript
+	    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	},
+	
 	createObject : function (entryCounter) {
 		if (entryCounter >= Muzic.util.FileRead.getDirEntries().length) {
 			console.log('wrong length');
@@ -184,8 +189,8 @@ Ext.define('Muzic.util.FileRead', {
 			}
 			//Muzic.util.FileRead.loadID3Tag(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			return { 
-					title : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
-					artist: Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
+					title : titleArtist.title,
+					artist: titleArtist.artist,
 					filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL
 		    };
 		}
