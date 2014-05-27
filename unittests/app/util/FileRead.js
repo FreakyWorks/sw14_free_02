@@ -94,12 +94,13 @@ describe("Muzic.util.FileRead", function () {
 	
 	describe("File exists checker", function () {
 		beforeEach(function() {
+			jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 		   spyOn(Muzic.util.FileRead, 'fileExists');
 		   var dirEntries = Muzic.util.FileRead.getDirEntries();
 		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL);
 		    setTimeout(function() {
 		      done();
-		    }, 2000);
+		    }, 3000);
 		});
 		
 		it("has found our file", function() {
@@ -117,7 +118,60 @@ describe("Muzic.util.FileRead", function () {
 		});
 	});
 	
-
+	describe("String trimmer", function () {
+		it("has trimmed our string", function() {
+			var trimmedStr = Muzic.util.FileRead.trimString("   My Artist - Title Name  ");
+			expect(trimmedStr).toBe("My Artist - Title Name");
+		});
+	});
+	
+	describe("Title/Artist reader", function () {
+		it("has read only the title", function() {
+			var entry = {
+				name : "My Title.mp3"
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("My Title");
+			expect(titleArtist.artist).toBe('');
+		});
+		it("has read title and artist", function() {
+			var entry = {
+				name : "   My Artist - Title Name  .mp3"
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("Title Name");
+			expect(titleArtist.artist).toBe("My Artist");
+		});
+		it("has read title and artist with long file ending", function() {
+			var entry = {
+				name : "My Artist - Title Name  .mp3.musicfile"
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("Title Name  .mp3");
+			expect(titleArtist.artist).toBe("My Artist");
+		});
+		it("has read title and artist without fileending", function() {
+			var entry = {
+				name : "My Artist - Title Name  "
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("Title Name");
+			expect(titleArtist.artist).toBe("My Artist");
+		});
+		it("has read title and artist wit multiple -", function() {
+			var entry = {
+				name : "My Artist - Title Name - g - something else   .mp3"
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("Title Name - g - something else");
+			expect(titleArtist.artist).toBe("My Artist");
+		});
+	});
 	
 
 });

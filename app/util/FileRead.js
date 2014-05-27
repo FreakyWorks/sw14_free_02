@@ -172,6 +172,48 @@ Ext.define('Muzic.util.FileRead', {
 		console.log("Unable to retrieve file properties: " + error.code);
 	},
 	
+	trimString : function (str) {
+		if (str === undefined) {
+			return;
+		}
+		//http://blog.stevenlevithan.com/archives/faster-trim-javascript
+	    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	},
+	
+	getTitleArtistFromFileName : function (entry) {
+		if (entry === undefined) {
+			return;
+		}
+		var filename = undefined;
+		if (entry.name.lastIndexOf('.') === -1) {
+			filename = entry.name;
+		}
+		else {
+			filename = entry.name.substr(0,  entry.name.lastIndexOf('.'));
+		}
+		var splittedStrings = filename.split('-');
+		if (splittedStrings.length <= 2) {
+			return {
+				title : Muzic.util.FileRead.trimString(splittedStrings[1]) || Muzic.util.FileRead.trimString(splittedStrings[0]),
+				artist : ((Muzic.util.FileRead.trimString(splittedStrings[1])) ? Muzic.util.FileRead.trimString(splittedStrings[0]) : '')
+			};
+		}
+		else {
+			var title = "";
+			for (var counter = 1; counter < splittedStrings.length; counter++) {
+				title += splittedStrings[counter];
+				if (counter < (splittedStrings.length - 1)) {
+					title += "-";
+				}
+			}
+			title = Muzic.util.FileRead.trimString(title);
+			return {
+				title : title,
+				artist : Muzic.util.FileRead.trimString(splittedStrings[0])
+			};
+		}
+	},
+	
 	createObject : function (entryCounter) {
 		if (entryCounter >= Muzic.util.FileRead.getDirEntries().length) {
 			console.log('wrong length');
@@ -182,10 +224,11 @@ Ext.define('Muzic.util.FileRead', {
 				console.log('wrong ending');
 				return;
 			}
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			//Muzic.util.FileRead.loadID3Tag(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			return { 
-					title : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
-					artist: Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL,
+					title : titleArtist.title,
+					artist : titleArtist.artist,
 					filepath : Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL
 		    };
 		}
