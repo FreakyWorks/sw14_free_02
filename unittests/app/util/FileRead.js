@@ -117,7 +117,12 @@ describe("Muzic.util.FileRead", function () {
 		});
 	});
 	
-
+	describe("String trimmer", function () {
+		it("has trimmed our string", function() {
+			var trimmedStr = Muzic.util.FileRead.trimString("   My Artist - Title Name  ");
+			expect(trimmedStr).toBe("My Artist - Title Name");
+		});
+	});
 	
 
 });
