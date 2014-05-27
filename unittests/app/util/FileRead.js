@@ -94,17 +94,16 @@ describe("Muzic.util.FileRead", function () {
 	
 	describe("File exists checker", function () {
 		beforeEach(function() {
-		   spyOn(Muzic.util.Database, 'deleteEntry');
+		   spyOn(Muzic.util.FileRead, 'fileExists');
 		   var dirEntries = Muzic.util.FileRead.getDirEntries();
-		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL, undefined, Muzic.util.Database.deleteEntry);
-		   Muzic.util.FileRead.checkIfFileExists("file://fake/Path", undefined, Muzic.util.Database.deleteEntry);
+		   Muzic.util.FileRead.checkIfFileExists(dirEntries[dirEntries.length - 1].nativeURL);
 		    setTimeout(function() {
 		      done();
 		    }, 2000);
 		});
 		
-		it("has called deleter (our callback)", function() {
-			expect(Muzic.util.Database.deleteEntry).toHaveBeenCalled();
+		it("has found our file", function() {
+			expect(Muzic.util.FileRead.fileExists).toHaveBeenCalled();
 		});
 	});
 	
