@@ -162,6 +162,15 @@ describe("Muzic.util.FileRead", function () {
 			expect(titleArtist.title).toBe("Title Name");
 			expect(titleArtist.artist).toBe("My Artist");
 		});
+		it("has read title and artist wit multiple -", function() {
+			var entry = {
+				name : "My Artist - Title Name - g - something else   .mp3"
+			};
+			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(entry);
+			console.log(titleArtist);
+			expect(titleArtist.title).toBe("Title Name - g - something else");
+			expect(titleArtist.artist).toBe("My Artist");
+		});
 	});
 	
 
