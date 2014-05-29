@@ -1,13 +1,13 @@
 BB10-WebWorks-Samples-WebWorks-2.0
 build
-fabio
 muzic
 packages
 webworks
-app_firsttry
-app_secondtry
 app/view/speaker
 app/view/session
 app/view/about
 samplemusic.json
-cordova
+.directory
+cordova/www/uitests
+cordova/www/unittests
+cordova/www/app
