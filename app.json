@@ -78,11 +78,7 @@
 		{
 			"path": "idv3full/stringutils.js",
 			"remote": true
-		},	
-        {
-            "path": "SQLitePlugin.js",
-            "remote": true
-        },
+		},
         {
             "path": "touch/sencha-touch.js",
             "x-bootstrap": true
