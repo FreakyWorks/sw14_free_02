@@ -12,11 +12,11 @@ StartTest(function(t) {
         { 
             waitFor : 'CQ', 
             args    : 'player',
-            desc    : 'Should find songs view on app start'
+            desc    : 'Should find pause button on app start'
         },
         
         function(next) {
-            t.ok(t.cq1('#pauseButton'), 'Should find a song list');
+            t.ok(t.cq1('#pauseButton'), 'Should find a pause button');
         }
     );
 
