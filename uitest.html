@@ -9,16 +9,17 @@
             
             Note, that we include "siesta-touch-all.js" file here.
          -->
-    
         <!-- 
             SenchaTouch library CSS, this is merely for the Siesta UI and is not used by your tests.
             Your tests use the ExtJS/SenchaTouch library, specified in the "preload" config of harness.
             Do not change this line, instead modify the "preload".  
         -->
+        
+        
         <link rel="stylesheet" type="text/css" href="http://cdn.sencha.com/touch/sencha-touch-2.2.1/resources/css/sencha-touch.css">
         
         <!-- Siesta CSS -->
-        <link rel="stylesheet" type="text/css" href="resources/css/siesta-touch-all.css">
+        <link rel="stylesheet" type="text/css" href="uitests/resources/css/siesta-touch-all.css">
     </head>
     <body>
         <div id="splashLoader">
@@ -36,9 +37,10 @@
         <script type="text/javascript" src="http://cdn.sencha.com/touch/sencha-touch-2.2.1/sencha-touch-all-debug.js"></script>
         
         <!-- Siesta application -->
-        <script type="text/javascript" src="siesta-touch-all.js"></script>
+        <script type="text/javascript" src="uitests/siesta-touch-all.js"></script>
 
         <!-- The test harness -->
-        <script type="text/javascript" src="index.js"></script>
+        <script type="text/javascript">testUI = true;</script>
+        <script type="text/javascript" src="uitest.js"></script>
     </body>
 </html>

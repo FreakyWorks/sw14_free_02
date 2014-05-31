@@ -9,7 +9,7 @@
     changes and its generated code, it will produce a "merge conflict" that you
     will need to resolve manually.
 */
-Ext.require('Muzic.util.FileRead');
+//Ext.require('Muzic.util.FileRead');
 
 //This is already listened to by Sencha!
 //document.addEventListener('deviceready', file.requestOurFS() , false);
@@ -21,7 +21,8 @@ Ext.application({
 
     requires: [
         'Ext.MessageBox',
-        'Muzic.util.FileRead'
+        'Muzic.util.FileRead',
+        'Muzic.util.Database'
     ],
 
     icon: {
@@ -53,13 +54,37 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
+        
         /*Muzic.util.Proxy.process('data/feed.js', function() {
             Ext.Viewport.add({ xtype: 'main' });
             Ext.Viewport.setMasked(false);
         });*/
         // Initialize the main view
         Ext.Viewport.add(Ext.create('Muzic.view.Main'));
-        Muzic.util.FileRead.requestOurFS();
+        if(!testUI) {
+	        Muzic.util.FileRead.requestDir('Music');  
+	        
+	        window.setTimeout(function () {
+	        	Muzic.util.Database.openDB();
+	        	Muzic.util.Database.createTables();
+	        	Muzic.util.Database.checkIfAllDBEntriesExist();
+	        	Muzic.util.FileRead.addAllEntriesToDB(); //update DB
+	         }, 100);
+	         window.setTimeout(function () {
+	         	Muzic.util.Database.addAllEntriesToStore('Songs');
+	         	 }, 300);	
+        }
+        else {
+	        window.setTimeout(function () {
+		        	Muzic.util.Database.openDB();
+		        	Muzic.util.Database.createTables();
+		         }, 100);
+	        window.setTimeout(function () {
+		        	Muzic.util.Database.addEntry("mysong", "myartist", "here/there/anywhere");
+		        	Muzic.util.Database.addAllEntriesToStore('Songs');
+		         }, 300);
+        	
+        }
     },
 
     onUpdated: function() {

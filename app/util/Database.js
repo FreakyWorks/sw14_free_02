@@ -13,7 +13,12 @@ Ext.define('Muzic.util.Database', {
 	},
 
 	openDB : function () {
-		Muzic.util.Database.setDatabase(window.sqlitePlugin.openDatabase({name: "MusicDatabase"}));
+		if(!testUI) {
+			Muzic.util.Database.setDatabase(window.sqlitePlugin.openDatabase({name: "MusicDatabase"}));
+		}
+		else {
+			Muzic.util.Database.setDatabase(window.openDatabase("MusicDatabase", "1.0", "Music database", 10000000));
+		}
 	},
 	
 	createTables: function () {
@@ -24,7 +29,7 @@ Ext.define('Muzic.util.Database', {
 		myDb.transaction(function(tx) {
         tx.executeSql('PRAGMA foreign_keys = ON;');
 		tx.executeSql('CREATE TABLE IF NOT EXISTS artists_table(artist_id integer primary key, artist_name text unique);');
-	    tx.executeSql('CREATE TABLE IF NOT EXISTS songs_table(song_id integer primary key, artist_id integer , title text, filepath text, FOREIGN KEY(artist_id) REFERENCES artists_table(artist_id), UNIQUE(artist_id, title, filepath));');
+	    tx.executeSql('CREATE TABLE IF NOT EXISTS songs_table(song_id integer primary key, artist_id integer , title text, filepath text unique, FOREIGN KEY(artist_id) REFERENCES artists_table(artist_id), UNIQUE(artist_id, title, filepath));');
 		//TODO add table for album if id3 reader works
       });
 	},
@@ -40,12 +45,11 @@ Ext.define('Muzic.util.Database', {
 		        [new_artist],
 		        function(tx, results) {
 		        	console.log("added new artist: " + new_artist);
-		        	console.log(tx);
 		        	console.log(results);
   
 	        	},
-		        function(err) {
-		        	console.log(err);
+		        function(tx, err) {
+		        	console.log(err.message);
 		        	console.log("creating new artist failed: " + new_artist);
 		        });	    
 		        
@@ -54,8 +58,8 @@ Ext.define('Muzic.util.Database', {
 			        function() {
 			        	console.log("added new song: " + new_title + new_filepath + new_artist);
 			        },
-			        function(err) {
-			        	console.log(err);
+			        function(tx, err) {
+			        	console.log(err.message);
 			        	console.log("creating new song failed: "  + new_title + new_filepath + new_artist);
 			        });    
 		});
@@ -118,7 +122,6 @@ Ext.define('Muzic.util.Database', {
 				console.log("Could not check entries");
 			});
 		});
-		
 	},
 	
 	addAllEntriesToStore : function (storeName, deleteExistingStore) {
