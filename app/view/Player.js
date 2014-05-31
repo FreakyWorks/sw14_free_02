@@ -9,16 +9,46 @@ Ext.define('Muzic.view.Player', {
     config: {
 
         title: 'Playing',
-        iconCls: 'time',
-        layout: 'vbox',
+        iconCls: 'play',
+        layout: {
+        	type: 'vbox',
+        	pack: 'end'
+        },
 
         autoDestroy: false,
-
         items: [
 	        {
-	            xtype : 'audio',
-	            hidden: true,
-	            url   : 'http://www.snapshotsisters.com/wp-content/uploads/2010/10/09-Make-You-Feel-My-Love.mp3'
+		        layout: {
+		        	type: 'hbox',
+		        	pack: 'end'
+		        },
+		        defaults: {
+		        	flex : 1
+		        },
+		        items: [
+			        {
+			            xtype : 'audio',
+			            id : 'audioPlayer',
+			            hidden: true,
+			            url   : ''
+			        },
+			        {
+			            xtype : 'button',
+			            iconCls: 'rewind',
+			            id : 'rewindButton'
+			        },
+			        {
+			            xtype : 'button',
+			            ui : 'confirm',
+			            iconCls: 'play',
+			            id : 'playButton'
+			        },
+			        {
+			            xtype : 'button',
+			            iconCls: 'fastforward',
+			            id : 'fastforwardButton'
+			        }
+		        ]
 	        }
         ]
     }
