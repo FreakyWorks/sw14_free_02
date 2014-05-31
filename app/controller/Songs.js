@@ -20,20 +20,21 @@ Ext.define('Muzic.controller.Songs', {
 				tap: 'onPauseButtonTap'
 			},
 			audioPlayer: {
-				ended: 'onPlayEnded'
+				ended: 'setPauseButtonToPlay',
+				stop: 'setPauseButtonToPlay',
+				pause: 'setPauseButtonToPlay',
+				play: 'setPauseButtonToPause'
 			}
 		}
 	},
 	
 	onItemTap: function(self, index, target, record, e)
 	{
-		console.log(self);
-		console.log(index);
-		console.log(target);
 		console.log(record);
-		console.log(e);
-		record.getFilePath();
-		this.getAudioPlayer().updateUrl('http://www.snapshotsisters.com/wp-content/uploads/2010/10/09-Make-You-Feel-My-Love.mp3');
+		
+		this.getAudioPlayer().updateUrl(record.data.filepath);
+		console.log(record.data.filepath);
+		this.getAudioPlayer().play();
 		//Muzic.util.FileRead.addAllEntriesToStore('Songs');
 		//this.toggleAudioPlayback(this.getAudioPlayer());
 	},
@@ -46,10 +47,15 @@ Ext.define('Muzic.controller.Songs', {
         this.toggleAudioPlayback(this.getAudioPlayer());
 	},
 	
-	onPlayEnded: function(self, time, eOpts)
+	setPauseButtonToPlay: function(self, time, eOpts)
 	{
 		//var button = Ext.getCmp('pauseButton');
 		this.getPauseButton().setText('Play');
+	},
+	
+	setPauseButtonToPause: function(self, time, eOpts)
+	{
+		this.getPauseButton().setText('Pause');
 	},
 	
 	toggleAudioPlayback : function (audioPlayer) {
