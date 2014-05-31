@@ -6,8 +6,11 @@ Ext.define('Muzic.controller.Songs', {
 		stores: ['Songs'],
 		views:   ['Main'],
 		
+		userSelection : undefined,
+		
+		
 		refs: {
-			songList: 'list', //generic! change later to more specific
+			songList: '#mySongList',
 			pauseButton: '#pauseButton',
 			audioPlayer: 'audio'
 		},
@@ -20,7 +23,7 @@ Ext.define('Muzic.controller.Songs', {
 				tap: 'onPauseButtonTap'
 			},
 			audioPlayer: {
-				ended: 'setPauseButtonToPlay',
+				ended: 'nextSong',
 				stop: 'setPauseButtonToPlay',
 				pause: 'setPauseButtonToPlay',
 				play: 'setPauseButtonToPause'
@@ -28,15 +31,15 @@ Ext.define('Muzic.controller.Songs', {
 		}
 	},
 	
+
+	
 	onItemTap: function(self, index, target, record, e)
 	{
 		console.log(record);
-		
 		this.getAudioPlayer().updateUrl(record.data.filepath);
+		this.setUserSelection(record);
 		console.log(record.data.filepath);
 		this.getAudioPlayer().play();
-		//Muzic.util.FileRead.addAllEntriesToStore('Songs');
-		//this.toggleAudioPlayback(this.getAudioPlayer());
 	},
 	
 	onPauseButtonTap: function(self, e)
@@ -44,6 +47,15 @@ Ext.define('Muzic.controller.Songs', {
         //var container = self.getParent().getParent().getParent(),
         // use ComponentQuery to get the audio component (using its xtype)
         //audio = container.down('audio');
+        console.log(this);
+        if(this.getUserSelection() === undefined) {
+        	filepath = Ext.getStore('Songs').first().getData().filepath;
+        	console.log(filepath);
+        	if(filepath !== undefined) {
+        		this.setUserSelection(Ext.getStore('Songs').first());
+        		this.getAudioPlayer().updateUrl(filepath);
+        	}
+        }
         this.toggleAudioPlayback(this.getAudioPlayer());
 	},
 	
@@ -58,6 +70,10 @@ Ext.define('Muzic.controller.Songs', {
 		this.getPauseButton().setText('Pause');
 	},
 	
+	nextSong : function(self, time, eOpts) {
+		
+	},
+	
 	toggleAudioPlayback : function (audioPlayer) {
 		if(audioPlayer === undefined) {
 			console.log("returned because player is undefined");
@@ -66,7 +82,7 @@ Ext.define('Muzic.controller.Songs', {
 		audioPlayer.toggle();
 		this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
 		return audioPlayer.isPlaying();
-	},
+	}
 	
 	/*toggleButonText : function () {
 		var button = this.getPauseButton();
