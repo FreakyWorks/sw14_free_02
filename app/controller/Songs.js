@@ -6,9 +6,6 @@ Ext.define('Muzic.controller.Songs', {
 		stores: ['Songs'],
 		views:   ['Main'],
 		
-		userSelection : undefined,
-		
-		
 		refs: {
 			songList: '#mySongList',
 			pauseButton: '#pauseButton',
@@ -17,7 +14,8 @@ Ext.define('Muzic.controller.Songs', {
 		
 		control: {
 			songList: {
-				itemtap: 'onItemTap'
+				itemtap: 'onItemTap',
+				select: 'onItemSelect'
 			},
 			pauseButton: {
 				tap: 'onPauseButtonTap'
@@ -35,9 +33,21 @@ Ext.define('Muzic.controller.Songs', {
 	
 	onItemTap: function(self, index, target, record, e)
 	{
-		console.log(record);
+		/*console.log(self);
+		console.log(index);
+		console.log(target);
+		console.log(record);*/
 		this.getAudioPlayer().updateUrl(record.data.filepath);
-		this.setUserSelection(record);
+		Muzic.util.Player.setUserSelectedRecord(record);
+		console.log(record.data.filepath);
+		this.getAudioPlayer().play();
+	},
+	
+	onItemSelect : function(self, record, eOpts) {
+		console.log(record);
+		var recordNumber = Muzic.util.Player.getUserSelectedRecord().id.replace( /^\D+/g, '');
+		this.getAudioPlayer().updateUrl(record.data.filepath);
+		Muzic.util.Player.setUserSelectedRecord(record);
 		console.log(record.data.filepath);
 		this.getAudioPlayer().play();
 	},
@@ -47,12 +57,13 @@ Ext.define('Muzic.controller.Songs', {
         //var container = self.getParent().getParent().getParent(),
         // use ComponentQuery to get the audio component (using its xtype)
         //audio = container.down('audio');
-        console.log(this);
-        if(this.getUserSelection() === undefined) {
+        
+        //set first song if nothing has been tapped
+        if(Muzic.util.Player.getUserSelectedRecord() === undefined) {
         	filepath = Ext.getStore('Songs').first().getData().filepath;
         	console.log(filepath);
         	if(filepath !== undefined) {
-        		this.setUserSelection(Ext.getStore('Songs').first());
+        		Muzic.util.Player.setUserSelectedRecord(Ext.getStore('Songs').first());
         		this.getAudioPlayer().updateUrl(filepath);
         	}
         }
@@ -71,7 +82,16 @@ Ext.define('Muzic.controller.Songs', {
 	},
 	
 	nextSong : function(self, time, eOpts) {
-		
+		console.log("next");
+		var recordNumber = Muzic.util.Player.getIdOfUserSelectedRecord();
+		console.log(recordNumber);
+		if (recordNumber !== undefined) {
+			var nextRecord = Muzic.util.Player.getUserSelectedRecord().stores[0].getById('ext-record-' + (recordNumber + 1));
+    		console.log(nextRecord);
+    		if (nextRecord !== undefined && nextRecord !== null) {
+    			this.getSongList().select(nextRecord, false, false);
+    		}
+		}
 	},
 	
 	toggleAudioPlayback : function (audioPlayer) {
@@ -83,15 +103,5 @@ Ext.define('Muzic.controller.Songs', {
 		this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
 		return audioPlayer.isPlaying();
 	}
-	
-	/*toggleButonText : function () {
-		var button = this.getPauseButton();
-		if(button.getText() === 'Pause') {
-			button.setText('Play');
-		}
-		else {
-			button.setText('Pause');
-		}
-	}*/
 	
 });
