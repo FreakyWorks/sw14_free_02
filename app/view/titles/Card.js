@@ -10,7 +10,7 @@ Ext.define('Muzic.view.titles.Card', {
     config: {
 
         title: 'Songs',
-        iconCls: 'time',
+        iconCls: 'music',
         layout: 'vbox',
 
         autoDestroy: false,
@@ -18,6 +18,7 @@ Ext.define('Muzic.view.titles.Card', {
         items: [
             {
 				xtype: 'list',
+				id: 'mySongList',
 				name: 'songlist',
 				store: 'Songs', // <tpl if="alreadyHeard">isdone</tpl>
 				itemTpl: '<tpl for=".">\
@@ -27,8 +28,9 @@ Ext.define('Muzic.view.titles.Card', {
 			    flex: 1			
             },
             {
-				html: '<a href="unittests/SpecRunner.html">Test</a>'
-			}
+				html: '<a href="unittests/SpecRunner.html">Test</a> <a href="uitest.html">Test UI</a>'
+			},
+			{ xclass: 'Muzic.view.Player' }
         ]
     }
 });
