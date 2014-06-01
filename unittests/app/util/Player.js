@@ -10,7 +10,7 @@ describe("Muzic.util.Player", function () {
 		});
 	});
 	
-	describe("next Song", function () {
+	describe("go to next Song", function () {
 		var rec, keep, suppress;
 		
 		
@@ -27,19 +27,47 @@ describe("Muzic.util.Player", function () {
 				stores: [
 					{
 						getById : function(id) {
-							return 'ext-record-31';
+							return {id : id};
 						}
 					}
 				]
 			});
-			Muzic.util.Player.nextSong(songList);
-			console.log(keep);
-			console.log(suppress);
-			console.log(rec);
+			Muzic.util.Player.goToNextSong(songList);
 			expect(keep).toBeFalsy();
 			expect(suppress).toBeFalsy();
 		    expect(rec).toBeDefined();
-		    expect(parseInt(rec.replace( /^\D+/g, ''))).toBe(31);
+		    expect(parseInt(rec.id.replace( /^\D+/g, ''))).toBe(31);
+			done();
+		});
+	});
+	
+	describe("go to previous Song", function () {
+		var rec, keep, suppress;
+		
+		
+		var songList = {
+			select : function(record, keepExisting, suppressEvent) {
+				rec = record;
+				keep = keepExisting;
+				suppress = suppressEvent;
+			}
+		};
+		it("called our select function with the right parameter", function(done) {
+			Muzic.util.Player.setUserSelectedRecord({
+				id: 'ext-record-30',
+				stores: [
+					{
+						getById : function(id) {
+							return {id : id};
+						}
+					}
+				]
+			});
+			Muzic.util.Player.goToNextSong(songList);
+			expect(keep).toBeFalsy();
+			expect(suppress).toBeFalsy();
+		    expect(rec).toBeDefined();
+		    expect(parseInt(rec.id.replace( /^\D+/g, ''))).toBe(29);
 			done();
 		});
 	});
