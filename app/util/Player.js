@@ -9,5 +9,13 @@ Ext.define('Muzic.util.Player', {
 	constructor : function(config) {
 		this.initConfig(config);
 		this.callParent([config]);
+	},
+	
+	getIdOfUserSelectedRecord : function () {
+		if (Muzic.util.Player.getUserSelectedRecord() !== undefined) {
+			return parseInt(Muzic.util.Player.getUserSelectedRecord().id.replace( /^\D+/g, ''));
+		}
+		return undefined;
 	}
+	
 });
