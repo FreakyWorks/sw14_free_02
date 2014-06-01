@@ -23,13 +23,14 @@ Ext.define('Muzic.view.Player', {
 		        	pack: 'end'
 		        },
 		        defaults: {
-		        	flex : 1
+		        	flex : 10
 		        },
 		        items: [
 			        {
 			            xtype : 'audio',
 			            id : 'audioPlayer',
 			            hidden: true,
+			            flex: 0,
 			            url   : ''
 			        },
 			        {
