@@ -7,7 +7,6 @@ StartTest(function (t) {
     	{ waitFor : 1000 },
     	
         function(next) {
-
             t.scrollUntilElementVisible(t.cq1('#mySongList'), 'down', '.x-list-item-last', next);
         },
 
@@ -19,11 +18,11 @@ StartTest(function (t) {
         { action : 'tap', target : '.x-list-item-last' },
 
         function(next) {
+        	var should_path = Ext.getStore('Songs').last().getData().filepath;
             var sel = t.cq1('#mySongList').getSelection();
             console.log(sel[0]);
-            console.log("ee");
             t.is(sel.length, 1, '1 item is selected');
-            t.is(sel[0].data.filepath, 'music_files/crash.mp3', 'crash.mp3 is selected');
+            t.is(sel[0].data.filepath, should_path, should_path + ' is selected');
 
             // Let's go back up
             t.scrollUntilElementVisible(t.cq1('#mySongList').element, 'up', t.cq1('#mySongList').element.down('.x-list-item-first'), next);

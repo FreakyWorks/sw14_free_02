@@ -26,8 +26,7 @@ Ext.define('Muzic.view.Main', {
                 	}
                 ]
             },
-			{ xclass: 'Muzic.view.titles.Card' },
-			{ xclass: 'Muzic.view.Player' }
+			{ xclass: 'Muzic.view.titles.Card' }
 		]
 	}
 });

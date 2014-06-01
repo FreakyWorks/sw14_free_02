@@ -8,3 +8,11 @@
 
 // Examples of using the icon mixin:
 // @include icon('user');
+@include icon('music');
+@include icon('pause');
+@include icon('play');
+@include icon('rewind');
+@include icon('fastforward', 7);
+@include icon('quieter', '<');
+@include icon('louder', '>');
+@include icon('album', 'l');
