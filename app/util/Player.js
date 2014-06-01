@@ -19,17 +19,25 @@ Ext.define('Muzic.util.Player', {
 		return undefined;
 	},
 	
-	nextSong : function (songList) {
+	goToNextSong : function (songList) {
 		console.log("next");
+		Muzic.util.Player.changeSong(songList, 1);
+	},
+	
+	goToPreviousSong : function (songList) {
+		console.log("previous");
+		Muzic.util.Player.changeSong(songList, -1);
+	},
+	
+	changeSong : function (songList, offset) {
 		var recordNumber = Muzic.util.Player.getIdOfUserSelectedRecord();
 		console.log(recordNumber);
-		if (recordNumber !== undefined) {
-			var nextRecord = Muzic.util.Player.getUserSelectedRecord().stores[0].getById('ext-record-' + (recordNumber + 1));
+		if (recordNumber !== undefined && offset !== undefined) {
+			var nextRecord = Muzic.util.Player.getUserSelectedRecord().stores[0].getById('ext-record-' + (recordNumber + offset));
     		console.log(nextRecord);
     		if (nextRecord !== undefined && nextRecord !== null && songList !== undefined) {
     			songList.select(nextRecord, false, false);
     		}
 		}
 	}
-	
 });

@@ -63,7 +63,7 @@ describe("Muzic.util.Player", function () {
 					}
 				]
 			});
-			Muzic.util.Player.goToNextSong(songList);
+			Muzic.util.Player.goToPreviousSong(songList);
 			expect(keep).toBeFalsy();
 			expect(suppress).toBeFalsy();
 		    expect(rec).toBeDefined();
