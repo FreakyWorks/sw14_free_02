@@ -34,7 +34,7 @@ Ext.define('Muzic.controller.Player', {
 		}
 	},
 	
-	playButtonInRow: function(self, e)
+	onPlayButtonInRowTap: function(self, event)
 	{
         //var container = self.getParent().getParent().getParent(),
         // use ComponentQuery to get the audio component (using its xtype)
@@ -51,17 +51,19 @@ Ext.define('Muzic.controller.Player', {
         }
         this.toggleAudioPlayback(this.getAudioPlayer());
 	},
+	
+	onFastForwardButtonInRowTap: function(self, event) {
+		Muzic.util.Player.goToNextSong(this.getSongList());
+	},
+	
+	onRewindButtonInRowTap: function(self, event) {
+		Muzic.util.Player.goToPreviousSong(this.getSongList());
+	},
 
 
 	
-	onItemTap: function(self, index, target, record, e)
+	onItemTap: function(self, index, target, record, event)
 	{
-
-		
-		console.log(self);
-		console.log(index);
-		console.log(target);
-		console.log(record);
 		this.getAudioPlayer().updateUrl(record.data.filepath);
 		Muzic.util.Player.setUserSelectedRecord(record);
 		console.log(record.data.filepath);
@@ -78,12 +80,8 @@ Ext.define('Muzic.controller.Player', {
 		this.getAudioPlayer().play();
 	},
 	
-	onPauseButtonTap: function(self, e)
+	/*onPauseButtonTap: function(self, event)
 	{
-        //var container = self.getParent().getParent().getParent(),
-        // use ComponentQuery to get the audio component (using its xtype)
-        //audio = container.down('audio');
-        
         //set first song if nothing has been tapped
         if(Muzic.util.Player.getUserSelectedRecord() === undefined) {
         	filepath = Ext.getStore('Songs').first().getData().filepath;
@@ -94,41 +92,16 @@ Ext.define('Muzic.controller.Player', {
         	}
         }
         this.toggleAudioPlayback(this.getAudioPlayer());
-	},
+	},*/
 	
 	setPauseButtonToPlay: function(self, time, eOpts)
 	{
-		//var button = Ext.getCmp('pauseButton');
 		this.getPauseButton().setText('Play');
 	},
 	
 	setPauseButtonToPause: function(self, time, eOpts)
 	{
 		this.getPauseButton().setText('Pause');
-	},
-	
-	nextSong : function(self, time, eOpts) {
-		console.log("here");
-		var recordNumber = Muzic.util.Player.getUserSelectedRecord().id.replace( /^\D+/g, '');
-		console.log(recordNumber);
-    	var nextRecord = Muzic.util.Player.getUserSelectedRecord().stores[0].getById('ext-record-' + (parseInt(recordNumber) + 1));
-    	console.log(nextRecord);
-    	if (nextRecord !== undefined && nextRecord !== null) {
-    		this.getSongList().select(nextRecord, false, false);
-    	}
-    	
-		
-		
-		/*if (this.getUserSelection() !== undefined) {
-			var recordNumber = this.getUserSelection().id.replace( /^\D+/g, '');
-			if (recordNumber !== undefined && recordNumber !== null) {
-				var newRecord = this.getUserSelection().stores[0].getById('ext-record-' + (recordNumber + 1));
-				if (newRecord !== undefined && newRecord !== null) {
-					this.getAudioPlayer().updateUrl(newRecord.data.filepath);
-					this.getAudioPlayer().play();
-				}
-			}
-		}*/
 	},
 	
 	toggleAudioPlayback : function (audioPlayer) {
@@ -138,17 +111,8 @@ Ext.define('Muzic.controller.Player', {
 		}
 		audioPlayer.toggle();
 		this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
+		this.getPlayButtonInRow().setIconCls(audioPlayer.isPlaying() ? 'pause' : 'play');
+		
 		return audioPlayer.isPlaying();
 	}
-	
-	/*toggleButonText : function () {
-		var button = this.getPauseButton();
-		if(button.getText() === 'Pause') {
-			button.setText('Play');
-		}
-		else {
-			button.setText('Pause');
-		}
-	}*/
-	
 });

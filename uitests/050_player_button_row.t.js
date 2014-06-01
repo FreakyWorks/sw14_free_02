@@ -37,7 +37,7 @@ StartTest(function(t) {
         
         function(next) {
         	var newUserSelectedRecord = Muzic.util.Player.getUserSelectedRecord();
-        	t.is(oldUserSelectedRecord.getId() + 1, newUserSelectedRecord.getId(), 'Next record has been selected');
+        	t.is(parseInt(oldUserSelectedRecord.getId()) + 1, newUserSelectedRecord.getId(), 'Next record has been selected');
         	//TODO get real id
         	var button_icon = t.cq1('#playButton').getIconCls();
         	t.is(button_icon, "pause", 'Button text is still pause after pressing fast forward');
@@ -47,16 +47,14 @@ StartTest(function(t) {
         
         
         
-        
-        
-        
+        { waitFor : 2000 },
         
         { tap : '>> #playButton' },
         
         function(next) {
         	var button_icon = t.cq1('#playButton').getIconCls();
         	t.is(button_icon, "play", 'Button text is play after pressing pause');
-        	t.is(t.cq1('audio').isPlaying(), true, 'Audio is paused');
+        	t.is(t.cq1('audio').isPlaying(), false, 'Audio is paused');
             t.done();
         }
     );
