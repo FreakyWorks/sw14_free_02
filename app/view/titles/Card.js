@@ -16,6 +16,24 @@ Ext.define('Muzic.view.titles.Card', {
         autoDestroy: false,
 
         items: [
+			{
+                docked: 'top',
+                xtype: 'titlebar',
+                id: 'titleBar',
+                title: 'Muzic',
+                items: [
+                	{
+                		//iconCls: 'pause',
+                		text: 'Play',
+                		xtype: 'button',
+                		iconMask: true,
+                		align: 'right',
+                		id: 'pauseButton'
+                	}
+                ]
+            },
+        
+        
             {
 				xtype: 'list',
 				id: 'mySongList',
