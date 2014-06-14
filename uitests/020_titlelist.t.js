@@ -14,11 +14,17 @@ StartTest(function (t) {
             t.pass('Scrolled last item into view');
             next();
         },
+        
+        { waitFor : 1000 },
 
         { action : 'tap', target : '.x-list-item-last' },
 
+		{ waitFor : 1000 },
+
         function(next) {
         	var should_path = Ext.getStore('Songs').last().getData().filepath;
+        	console.log(t.cq1('#mySongList'));
+        	//This test may not work if the last element is hidden behind a toolbar. Bug in Siesta?
             var sel = t.cq1('#mySongList').getSelection();
             console.log(sel[0]);
             t.is(sel.length, 1, '1 item is selected');
@@ -27,8 +33,8 @@ StartTest(function (t) {
             // Let's go back up
             t.scrollUntilElementVisible(t.cq1('#mySongList').element, 'up', t.cq1('#mySongList').element.down('.x-list-item-first'), next);
         	
-        	button_text = t.cq1('#pauseButton').textElement.dom.innerHTML;
-        	t.is(button_text, "Pause", 'Button text is Pause after clicking element in list');
+        	var button_icon = t.cq1('#playButton').getIconCls();
+        	t.is(button_icon, "pause", 'Button icon is Pause after clicking element in list');
         	t.is(t.cq1('audio').isPlaying(), true, "Audio is playing");
             t.done();
         }
