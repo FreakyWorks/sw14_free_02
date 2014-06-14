@@ -4,12 +4,14 @@ Ext.define('Muzic.view.titles.Card', {
     xtype: 'titleContainer',
     requires: [
     	'Ext.dataview.List',
-    	'Ext.TitleBar'
+    	'Ext.TitleBar',
+    	'Ext.field.Search'
     ],
 
     config: {
 
         title: 'Songs',
+        emptyText : 'No Music available.',
         iconCls: 'music',
         layout: 'vbox',
 
@@ -22,14 +24,24 @@ Ext.define('Muzic.view.titles.Card', {
                 id: 'titleBar',
                 title: 'Muzic',
                 items: [
+                	{ xtype: 'spacer' },
                 	{
+                		xtype: 'searchfield',
+    		            name: 'search',
+    		            id: 'search',
+    		            autoComplete: true,
+    		            autoCorrect: false,
+          				placeHolder: 'Filter'
+                	},
+                	{ xtype: 'spacer' }
+                	/*{
                 		//iconCls: 'pause',
                 		text: 'Play',
                 		xtype: 'button',
                 		iconMask: true,
                 		align: 'right',
                 		id: 'pauseButton'
-                	}
+                	}*/
                 ]
             },
         

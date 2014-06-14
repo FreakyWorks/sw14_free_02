@@ -17,30 +17,8 @@ Ext.define('Muzic.view.Main', {
 		},*/
 
 		items: [
-
-            /*{
-                iconCls: 'action',
-                    title: 'Nested List',
-                    xtype: 'nestedlist',
-                    id:'test',
-                    displayField: 'text',
-		        items: [{
-		            text: 'Option A',
-		            items: [
-		                {text: 'Option A.1'},
-		                {text: 'Option A.2'}
-		            ]
-		        }, {
-		            text: 'Option B',
-		            items: [
-		                {text: 'Option B.1'},
-		                {text: 'Option B.2'}
-		            ]
-		        }]
-		    }*/
 		   {xclass : 'Muzic.view.titles.Card'},
 		   {xclass : 'Muzic.view.albums.Card'}
-		   
 		]
 	}
 });
