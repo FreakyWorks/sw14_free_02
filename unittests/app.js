@@ -22,7 +22,7 @@ describe("Sencha", function () {
     });
 
     it("has loaded our titles view", function () {
-    	var main = Ext.create(Muzic.view.Main);
+    	//var main = Ext.create(Muzic.view.Main);
         expect(Muzic.view.titles.Card).toBeDefined();
     });
 });

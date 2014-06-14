@@ -244,9 +244,9 @@ describe("Muzic.util.Database", function () {
 		
 		it("has added all entries to the store", function() {
 			Muzic.util.Database.addAllEntriesToStore('Songs', false);
-			var data = Muzic.util.Database.getStore().data.all;
-			var previousItem = data[data.length - 2].data;
-			var lastItem = data[data.length - 1].data;
+			//var data = Muzic.util.Database.getStore().data.all;
+			//var previousItem = data[data.length - 2].data;
+			//var lastItem = data[data.length - 1].data;
 			expect(Muzic.util.Database.getStore().getCount()).toBeGreaterThan(0);
 			
 			//Expecting that folder contains both crash.mp3 and crash1.mp3
@@ -257,9 +257,9 @@ describe("Muzic.util.Database", function () {
 		
 		it("has deleted old entries and stored new entries to the store", function() {
 			Muzic.util.Database.addAllEntriesToStore('Songs', true);
-			var data = Muzic.util.Database.getStore().data.all;
-			var previousItem = data[data.length - 2].data;
-			var lastItem = data[data.length - 1].data;
+			//var data = Muzic.util.Database.getStore().data.all;
+			//var previousItem = data[data.length - 2].data;
+			//var lastItem = data[data.length - 1].data;
 			console.log("Songs count: " + songs_count);
 			expect(Muzic.util.Database.getStore().getCount()).toBe(songs_count);
 			
@@ -270,10 +270,12 @@ describe("Muzic.util.Database", function () {
 		});
 	});
 	
-	/*describe("addAllEntriesToStore", function () {
-
-
-	});*/
+	describe("addAllEntriesToArtistStore", function () {
+		it("has added entries to the store", function() {
+			Muzic.util.Database.addAllEntriesToStore('Songs', false);
+			expect(Ext.getStore('Artists').getCount()).toBeGreaterThan(0);
+		});
+	});
 	
 	
 	describe("Store", function () {

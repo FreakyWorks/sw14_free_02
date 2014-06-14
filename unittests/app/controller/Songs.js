@@ -20,8 +20,8 @@ describe('Muzic.controller.Songs', function () {
     console.log(controller.getAudioPlayer().isPlaying());
     expect(controller.toggleAudioPlayback(controller.getAudioPlayer())).toBeTruthy;
     
-    console.log(controller.getPauseButton().getText());
-    expect(controller.getPauseButton().getText()).toMatch('Play');
+    console.log(controller.getPlayButtonInRow().getIconCls());
+    expect(controller.getPlayButtonInRow().getIconCls()).toMatch('play');
     /*expect(controller.onPauseButtonTap).toEqual('Muzic.model.Song');
     expect(order.phantom).toBeTruthy();*/
   });
@@ -34,6 +34,6 @@ describe('Muzic.controller.Songs', function () {
  
   afterEach(function () {
     app.destroy();
-    document.getElementById('mytest').innerHTML = "";
+    document.getElementById('mytest').innerHTML = "a";
   });
 });

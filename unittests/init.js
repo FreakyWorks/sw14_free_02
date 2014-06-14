@@ -11,6 +11,7 @@ Ext.application({
     name: 'Muzic'               // Create (but don't launch) an application
 });
 
+testUI = false;
 
 Ext.require('Ext.data.Model');
 

@@ -7,7 +7,7 @@ describe("Muzic.util.FileRead", function () {
 		  	Muzic.util.FileRead.requestOurFS();
 		    setTimeout(function() {
 		      done();
-		    }, 2000);
+		    }, 3000);
 		  });
 		  
 		it("successfully requested in under 2s", function(done) {
