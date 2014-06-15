@@ -10,9 +10,10 @@ Ext.define('Muzic.view.Main', {
 
 	config: {
 		tabBarPosition: 'bottom',
-		/*tabBar: {
-			ui: 'gray'
-		},*/
+		tabBar: {
+			id: 'tabbar'
+			//ui: 'gray'
+		},
 
 		items: [
 		   {xclass : 'Muzic.view.titles.Card'},

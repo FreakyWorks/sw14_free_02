@@ -11,6 +11,13 @@ Ext.define('Muzic.store.Songs', {
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'},
         	{title: 'mysong', album: 'myalbum', filepath: 'store/ersdf/esrs'}*/
-        ]
+        ],
+        proxy: {
+        	type: 'memory',
+	        reader: {
+	            type: 'json',
+	            rootProperty: 'items'
+	        }
+        }
     }
 });

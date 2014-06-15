@@ -2,16 +2,15 @@ Ext.define('Muzic.controller.Player', {
 	extend: 'Ext.app.Controller',
 
 	config: {
-		models: ['Song'],
-		stores: ['Songs'],
-		views:   ['Main'],
+		//views:   ['Main', 'Player'],
 		
 		refs: {
 			songList: '#mySongList',
-			pauseButton: '#pauseButton',
+			//pauseButton: '#pauseButton',
 			playButtonInRow: '#playButton',
 			rewindButtonInRow: '#rewindButton',
 			fastForwardButtonInRow: '#fastforwardButton',
+			abc : '#tes',
 			audioPlayer: 'audio'
 		},
 		
@@ -24,7 +23,12 @@ Ext.define('Muzic.controller.Player', {
 			},
 			fastForwardButtonInRow: {
 				tap: 'onFastForwardButtonInRowTap'
-			}/*,
+			},
+			audioPlayer: {
+				play: 'onPlayStart'
+			}
+			
+			/*,
 			fastForwardButtonInRow: {
 				ended: 'nextSong',
 				stop: 'setPauseButtonToPlay',
@@ -34,11 +38,16 @@ Ext.define('Muzic.controller.Player', {
 		}
 	},
 	
-	onPlayButtonInRowTap: function(self, event)
-	{
+	onPlayStart: function (self, eOpts) {
+		this.getPlayButtonInRow().setIconCls(this.getAudioPlayer().isPlaying() ? 'pause' : 'play');
+	},
+	
+	onPlayButtonInRowTap: function(self, event) {
         //var container = self.getParent().getParent().getParent(),
         // use ComponentQuery to get the audio component (using its xtype)
         //audio = container.down('audio');
+        
+        console.log(this.getAbc());
         
         //set first song if nothing has been tapped
         if(Muzic.util.Player.getUserSelectedRecord() === undefined) {
@@ -67,11 +76,10 @@ Ext.define('Muzic.controller.Player', {
 		this.getAudioPlayer().updateUrl(record.data.filepath);
 		Muzic.util.Player.setUserSelectedRecord(record);
 		console.log(record.data.filepath);
-		this.getAudioPlayer().play();
+		this.toggleAudioPlayback().play();
 	},
 	
 	onItemSelect : function(self, record, eOpts) {
-		console.log("HERER");
 		console.log(record);
 		var recordNumber = Muzic.util.Player.getUserSelectedRecord().id.replace( /^\D+/g, '');
 		this.getAudioPlayer().updateUrl(record.data.filepath);
@@ -110,7 +118,7 @@ Ext.define('Muzic.controller.Player', {
 			return;
 		}
 		audioPlayer.toggle();
-		this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
+		//this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
 		this.getPlayButtonInRow().setIconCls(audioPlayer.isPlaying() ? 'pause' : 'play');
 		
 		return audioPlayer.isPlaying();

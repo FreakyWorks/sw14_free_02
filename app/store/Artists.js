@@ -3,15 +3,22 @@ Ext.define('Muzic.store.Artists', {
 
     config: {
     	storeId: 'Artists',
-        model: 'Muzic.model.Artist',
+        model: 'Muzic.model.Song',
         //for testing:
         /*proxy: {
         	type: 'ajax',
         	url: '/data/catalogue.json',
-        	        reader: {
-            type: 'json',
-            root: 'items'
-        }
+	        reader: {
+	            type: 'json',
+	            root: 'items'
+	        }
         }*/
+       proxy: {
+        	type: 'memory',
+	        reader: {
+	            type: 'json',
+	            rootProperty: 'items'
+	        }
+        }
     }
 });
