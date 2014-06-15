@@ -24,7 +24,10 @@ Harness.configure({
 Harness.start(
 	'uitests/010_sanity.t.js',
 	'uitests/030_player.t.js',
-	'uitests/020_titlelist.t.js'
+	'uitests/020_titlelist.t.js',
+	'uitests/050_player_button_row.t.js',
+	'uitests/060_search.t.js',
+	'uitests/070_artists_view.t.js'
     /*{
         group           : 'Application tests',
         hostPageUrl     : './',
