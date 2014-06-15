@@ -26,7 +26,6 @@
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/cordova.js \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/cordova \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/index.html \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/plugins \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/app.json \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources \
@@ -6579,15 +6578,6 @@
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/cordova/www/unittests/lib/jasmine-2.0.0/jasmine_favicon.png \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/cordova/www/unittests/lib/jasmine-2.0.0/jasmine.js \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/cordova/www/touch/sencha-touch-all.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/id3v2frames.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/binaryfile.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/filereader.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/id3v1.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/bufferedbinaryajax.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/id4.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/id3.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/stringutils.js \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/idv3full/id3v2.js \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/plugins/org.apache.cordova.vibration \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/plugins/org.apache.cordova.dialogs \
@@ -6625,7 +6615,6 @@
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/css \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/icons \
-/home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/crash.mp3 \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/startup \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/images \
 /home/gery/Dokumente/AptanaWorkspace/sw14_free_02/cordova/platforms/android/assets/www/resources/css/app.css \

@@ -40,21 +40,6 @@ StartTest(function(t) {
         	t.is(t.cq1('audio').isPlaying(), false, 'Audio paused after button press');
             next();
             t.done();
-        }/*,
-        
-        // We'd like to find a headshot icon the DOM, that's proof the main app has been launched ok
-        { 
-            waitFor : 'compositeQuery', 
-            args    : 'contacts => .headshot',
-            desc    : 'Should be able login and see contact list'
-        },
-
-        { tap : 'contacts => .headshot' },
-
-        { waitFor : 'componentVisible', args : 'map' },
-
-        function(next) {
-            t.pass('Should see a detail view with map after tapping a contact');
-        }*/
+        }
     );
 });

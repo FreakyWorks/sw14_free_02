@@ -34,14 +34,6 @@ Ext.define('Muzic.view.titles.Card', {
           				placeHolder: 'Filter'
                 	},
                 	{ xtype: 'spacer' }
-                	/*{
-                		//iconCls: 'pause',
-                		text: 'Play',
-                		xtype: 'button',
-                		iconMask: true,
-                		align: 'right',
-                		id: 'pauseButton'
-                	}*/
                 ]
             },
         
@@ -49,7 +41,7 @@ Ext.define('Muzic.view.titles.Card', {
 				xtype: 'list',
 				id: 'mySongList',
 				name: 'songlist',
-				store: 'Songs', // <tpl if="alreadyHeard">isdone</tpl>
+				store: 'Songs',
 				itemTpl: '<tpl for=".">\
 							<div class="songtitle">{title}</div>\
 							<div class="songalbum">{album}</div>\
@@ -57,7 +49,7 @@ Ext.define('Muzic.view.titles.Card', {
 			    flex: 1			
             },
             {
-				html: '<a href="unittests/SpecRunner.html">Test</a> <a href="uitest.html">Test UI</a>'
+				html: '<a href="unittests/SpecRunner.html">Test</a>'
 			}
         ]
     }
