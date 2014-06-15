@@ -11,7 +11,8 @@ Ext.define('Muzic.util.FileRead', {
         dir: [],
         dirEntries: [],
         recognizedEndings : ['mp3'],
-        tryCounter: 0
+        tryCounter: 0,
+        currentlyReading: 0
    },
    
 	constructor : function(config) {
@@ -39,18 +40,19 @@ Ext.define('Muzic.util.FileRead', {
 	gotFileSystem : function (fileSystem) {
 		console.log("gotFS");
 		Muzic.util.FileRead.setFileSys(fileSystem);
-		//TEST:
-		console.log(fileSystem.root);
+		//console.log(fileSystem.root);
 	},
 	
 	
 	//Request a directory, path should be relative to root
 	requestDir : function (folder) {
+		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() + 1);
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
 		
 		if(fileSystem == undefined) {
 			if(Muzic.util.FileRead.getTryCounter() >= 10) {
+				Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 				return;
 			}
 			Muzic.util.FileRead.requestOurFS();
@@ -68,7 +70,6 @@ Ext.define('Muzic.util.FileRead', {
 		console.log("gotDirectory");
 		Muzic.util.FileRead.setDir(Muzic.util.FileRead.getDir().concat(directory));
 		console.log(directory);
-		//TODO may change
 		Muzic.util.FileRead.requestEntries(Muzic.util.FileRead.getDir().length - 1);
 	},
 	
@@ -85,10 +86,25 @@ Ext.define('Muzic.util.FileRead', {
 	
 	//Entries successfully requested
 	gotEntries : function (entries) {
-		//Muzic.util.FileRead.setEntries(entries);
 		console.log('got entries');
+		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 		console.log(entries);
+		for (var counter = 0; counter < entries.length; counter++) {
+			if (entries[counter].isDirectory) {
+				Muzic.util.FileRead.requestDir(entries[counter].fullPath.slice(1));
+			}
+		}
 		Muzic.util.FileRead.setDirEntries(Muzic.util.FileRead.getDirEntries().concat(entries));
+		console.log("currently" + Muzic.util.FileRead.getCurrentlyReading());
+		
+        window.setTimeout(function () {
+        	// in case something goes horribly wrong
+        	Muzic.util.Database.createTables();
+         }, 5000);
+		
+		if (Muzic.util.FileRead.getCurrentlyReading() <= 1) {
+			Muzic.util.Database.createTables();
+		}
 	},
 	
 	checkEnding : function (fileName) {
@@ -120,6 +136,10 @@ Ext.define('Muzic.util.FileRead', {
 				Muzic.util.Database.addEntry((fileObject.title || ""), (fileObject.artist || ""), (fileObject.filepath || ""));
 			}
 		}
+     	window.setTimeout(function () {
+         	Muzic.util.Database.addAllEntriesToStore('Songs', true);
+         	Muzic.util.Database.addAllEntriesToArtistStore('Artists');
+     	 }, 1000);
 	},
 	
 	checkIfFileExists : function (nativeURL) {
@@ -136,7 +156,7 @@ Ext.define('Muzic.util.FileRead', {
 	},
 	
 	
-	loadID3Tag : function (fileEntry) {
+	//loadID3Tag : function (fileEntry) {
 		
 		/*ID3.loadTags("http://media.aaspeakers.org/download.php?file_id=b04b8a3e62f81a615317b00f5abaec2d&save=Dr.%20Harry%20T.%20from%20New%20York%20-%20Anonymity%20The%20Ego%20Reducer%20in%20St.%20Louis%2C%20MO%20on%20%2807-05-1955%29.mp3", function() {
 		    var tags = ID3.getAllTags("http://media.aaspeakers.org/download.php?file_id=b04b8a3e62f81a615317b00f5abaec2d&save=Dr.%20Harry%20T.%20from%20New%20York%20-%20Anonymity%20The%20Ego%20Reducer%20in%20St.%20Louis%2C%20MO%20on%20%2807-05-1955%29.mp3");
@@ -147,7 +167,7 @@ Ext.define('Muzic.util.FileRead', {
 			console.log(reason);
        }
     });*/
-   		fileEntry.file(Muzic.util.FileRead.gotID3File, Muzic.util.FileRead.errorID3);
+   	/*	fileEntry.file(Muzic.util.FileRead.gotID3File, Muzic.util.FileRead.errorID3);
 
 	},
 	
@@ -166,11 +186,11 @@ Ext.define('Muzic.util.FileRead', {
 		});
 	}, 1000);
 
-	},
+	},*/
 	
-	errorID3 : function (error) {
+	/*errorID3 : function (error) {
 		console.log("Unable to retrieve file properties: " + error.code);
-	},
+	},*/
 	
 	trimString : function (str) {
 		if (str === undefined) {
@@ -195,7 +215,7 @@ Ext.define('Muzic.util.FileRead', {
 		if (splittedStrings.length <= 2) {
 			return {
 				title : Muzic.util.FileRead.trimString(splittedStrings[1]) || Muzic.util.FileRead.trimString(splittedStrings[0]),
-				artist : ((Muzic.util.FileRead.trimString(splittedStrings[1])) ? Muzic.util.FileRead.trimString(splittedStrings[0]) : '')
+				artist : ((Muzic.util.FileRead.trimString(splittedStrings[1])) ? Muzic.util.FileRead.trimString(splittedStrings[0]) : 'Unknown')
 			};
 		}
 		else {
@@ -220,6 +240,8 @@ Ext.define('Muzic.util.FileRead', {
 			return;
 		}
 		else {
+			console.log(Muzic.util.FileRead.getDirEntries()[entryCounter]);
+			
 			if(!(Muzic.util.FileRead.checkEnding(Muzic.util.FileRead.getDirEntries()[entryCounter].name))) {
 				console.log('wrong ending');
 				return;
@@ -241,6 +263,7 @@ Ext.define('Muzic.util.FileRead', {
 		console.log('An error has occured: ' + err.target.error.code);
 	},
 	logErrorCode : function (err) {
+		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 		console.log('An error has occured: ' + err.code + ' - See https://developer.mozilla.org/en-US/docs/Web/API/FileError');
 	}
 });

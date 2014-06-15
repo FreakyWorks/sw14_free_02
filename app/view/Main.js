@@ -17,7 +17,19 @@ Ext.define('Muzic.view.Main', {
 
 		items: [
 		   {xclass : 'Muzic.view.titles.Card'},
-		   {xclass : 'Muzic.view.albums.Card'}
+		   {xclass : 'Muzic.view.albums.Card'},
+           {
+	            xtype  : 'toolbar',
+	            docked : 'bottom',
+	            items  : [
+	                {
+	                	xclass : 'Muzic.view.Player',
+	                	flex: 1
+	                }
+	            ]
+        	}
 		]
+		
 	}
+	
 });

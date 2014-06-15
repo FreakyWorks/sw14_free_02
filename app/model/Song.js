@@ -11,8 +11,6 @@ Ext.define('Muzic.model.Song', {
 		],
 		validations: [{ type: 'presence', field: 'filepath'}]
 	}
-	
-	
 
 	/*getFullName: function() {
 		return this.get('first_name') + ' ' + this.get('last_name');

@@ -2,8 +2,13 @@ Ext.define('Muzic.util.Player', {
 
 	singleton: true,
 	autoDestroy: false,
+	
 	config : {
-        userSelectedRecord : undefined
+        userSelectedRecord : undefined,
+		currentList: undefined,
+		currentSongIndex: 0,
+		previousButton: undefined,
+		nextButton: undefined
    },
 
 	constructor : function(config) {
@@ -19,25 +24,52 @@ Ext.define('Muzic.util.Player', {
 		return undefined;
 	},
 	
-	goToNextSong : function (songList) {
+	goToNextSong : function () {
 		console.log("next");
-		Muzic.util.Player.changeSong(songList, 1);
+		var song_index = Muzic.util.Player.getCurrentSongIndex() + 1;
+		if (Muzic.util.Player.getPreviousButton() !== undefined) {
+			Muzic.util.Player.getPreviousButton().enable();
+		}
+		Muzic.util.Player.setCurrentSongIndex(song_index);
+		Muzic.util.Player.getCurrentList().select(song_index);
+		
+		if (Muzic.util.Player.getNextButton() !== undefined && song_index >= (Muzic.util.Player.getCurrentList().getStore().getCount() - 1)) {
+			Muzic.util.Player.getNextButton().disable();
+		}
 	},
 	
-	goToPreviousSong : function (songList) {
+	goToPreviousSong : function () {
 		console.log("previous");
-		Muzic.util.Player.changeSong(songList, -1);
+		var song_index = Muzic.util.Player.getCurrentSongIndex() - 1;
+		Muzic.util.Player.setCurrentSongIndex(song_index);
+		Muzic.util.Player.getCurrentList().select(song_index);
+		
+		if (Muzic.util.Player.getPreviousButton() !== undefined) {
+			if (song_index <= 0) {
+				Muzic.util.Player.getPreviousButton().disable();
+			}
+			else {
+				Muzic.util.Player.getPreviousButton().enable();
+			}
+		}
+		if (Muzic.util.Player.getNextButton() !== undefined && song_index < (Muzic.util.Player.getCurrentList().getStore().getCount() - 1)) {
+			Muzic.util.Player.getNextButton().enable();
+		}
 	},
 	
-	changeSong : function (songList, offset) {
-		var recordNumber = Muzic.util.Player.getIdOfUserSelectedRecord();
-		console.log(recordNumber);
-		if (recordNumber !== undefined && offset !== undefined) {
-			var nextRecord = Muzic.util.Player.getUserSelectedRecord().stores[0].getById('ext-record-' + (recordNumber + offset));
-    		console.log(nextRecord);
-    		if (nextRecord !== undefined && nextRecord !== null && songList !== undefined) {
-    			songList.select(nextRecord, false, false);
-    		}
+	checkButtons : function(index, list) {
+		if (index > 0) {
+			Muzic.util.Player.getPreviousButton().enable();
+		}
+		else {
+			Muzic.util.Player.getPreviousButton().disable();
+		}
+		
+		if (index < (list.getStore().getCount() - 1)) {
+			Muzic.util.Player.getNextButton().enable();
+		}
+		else {
+			Muzic.util.Player.getNextButton().disable();
 		}
 	}
 });

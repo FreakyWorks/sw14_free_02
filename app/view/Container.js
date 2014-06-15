@@ -1,10 +1,6 @@
-Ext.define('Muzic.view.Player', {
+Ext.define('Muzic.view.Container', {
 
     extend: 'Ext.Panel',
-    xtype: 'player',
-    requires: [
-    	'Ext.Audio'
-    ],
 
     config: {
 
@@ -36,8 +32,7 @@ Ext.define('Muzic.view.Player', {
 			        {
 			            xtype : 'button',
 			            iconCls: 'rewind',
-			            id : 'rewindButton',
-			            disabled: true
+			            id : 'rewindButton'
 			        },
 			        {
 			            xtype : 'button',
@@ -48,8 +43,7 @@ Ext.define('Muzic.view.Player', {
 			        {
 			            xtype : 'button',
 			            iconCls: 'fastforward',
-			            id : 'fastforwardButton',
-			            disabled: true
+			            id : 'fastforwardButton'
 			        }
 		        ]
 	        }
