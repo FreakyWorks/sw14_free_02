@@ -33,4 +33,3 @@ describe('Muzic.model.Song', function() {
 	  expect(model.get('alreadyHeard')).toEqual(false);
 	});
 });
-

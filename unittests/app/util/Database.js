@@ -242,41 +242,42 @@ describe("Muzic.util.Database", function () {
 		});
 		
 		
-		it("has added all entries to the store", function() {
+		it("has added all entries to the store, crash.mp3, crash1.mp3 exists", function() {
 			Muzic.util.Database.addAllEntriesToStore('Songs', false);
-			//var data = Muzic.util.Database.getStore().data.all;
+			var data = Muzic.util.Database.getStore().data.all;
 			//var previousItem = data[data.length - 2].data;
 			//var lastItem = data[data.length - 1].data;
 			expect(Muzic.util.Database.getStore().getCount()).toBeGreaterThan(0);
-			
+			var found_crashmp3 = false;
+			var found_crash1mp3 = false;
 			//Expecting that folder contains both crash.mp3 and crash1.mp3
-			//expect(previousItem.filepath).toMatch('link.mp3');
-			//expect(lastItem.filepath).toMatch('crash1.mp3'); //TODO change to search through all files
-			//done();
+			for (var counter = 0; counter < data.length; counter++) {
+				console.log("JROEHWER");
+				console.log(data[counter].data.filepath);
+				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash.mp3') {
+					found_crashmp3 = true;
+				}
+				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash1.mp3') {
+					found_crash1mp3 = true;
+				}
+			}
+			expect(found_crashmp3).toBeTruthy();
+			expect(found_crash1mp3).toBeTruthy();
 		});
 		
 		it("has deleted old entries and stored new entries to the store", function() {
 			Muzic.util.Database.addAllEntriesToStore('Songs', true);
-			//var data = Muzic.util.Database.getStore().data.all;
-			//var previousItem = data[data.length - 2].data;
-			//var lastItem = data[data.length - 1].data;
 			console.log("Songs count: " + songs_count);
 			expect(Muzic.util.Database.getStore().getCount()).toBe(songs_count);
-			
-			//Expecting that folder contains both crash.mp3 and crash1.mp3
-			//expect(previousItem.filepath).toMatch('link.mp3');
-			//expect(lastItem.filepath).toMatch('crash1.mp3'); //TODO change to search through all files
-			//done();
 		});
 	});
 	
 	describe("addAllEntriesToArtistStore", function () {
 		it("has added entries to the store", function() {
 			Muzic.util.Database.addAllEntriesToStore('Songs', false);
-			expect(Ext.getStore('Artists').getCount()).toBeGreaterThan(0);
+			expect(Muzic.util.Database.getStore().getCount()).toBeGreaterThan(0);
 		});
 	});
-	
 	
 	describe("Store", function () {
 		var store;
