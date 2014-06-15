@@ -20,9 +20,9 @@ Ext.define('Muzic.view.titles.Card', {
         items: [
 			{
                 docked: 'top',
-                xtype: 'titlebar',
+                xtype: 'toolbar',
                 id: 'titleBar',
-                title: 'Muzic',
+                //title: 'Muzic',
                 items: [
                 	{ xtype: 'spacer' },
                 	{
@@ -44,7 +44,6 @@ Ext.define('Muzic.view.titles.Card', {
                 	}*/
                 ]
             },
-        
         
             {
 				xtype: 'list',

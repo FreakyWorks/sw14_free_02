@@ -3,9 +3,7 @@ Ext.define('Muzic.view.Main', {
 	extend: 'Ext.tab.Panel',
 	xtype: 'main',
     requires: [
-    	'Muzic.view.titles.Card',
-    	'Muzic.view.Player',
-		'Muzic.view.albums.Card'
+		//Add required views in main, otherwise Jasmine can't find them
     ],
 	fullscreen: true,
 	

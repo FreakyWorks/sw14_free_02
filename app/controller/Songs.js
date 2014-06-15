@@ -3,13 +3,14 @@ Ext.define('Muzic.controller.Songs', {
 
 	config: {
 		models: ['Song'],
-		stores: ['Songs'],
-		views:   ['Main'],
+		views: ['Main'],
 		
 		refs: {
 			songList: '#mySongList',
 			pauseButton: '#pauseButton',
-			audioPlayer: 'audio'
+			audioPlayer: 'audio',
+			playButtonInRow: '#playButton',
+			searchField: '#search'
 		},
 		
 		control: {
@@ -22,13 +23,36 @@ Ext.define('Muzic.controller.Songs', {
 			},
 			audioPlayer: {
 				ended: 'nextSong',
-				stop: 'setPauseButtonToPlay',
-				pause: 'setPauseButtonToPlay',
-				play: 'setPauseButtonToPause'
+				//stop: 'setPauseButtonToPlay',
+				//pause: 'setPauseButtonToPlay',
+				//play: 'setPauseButtonToPause'
+			},
+			searchField: {
+				action: 'search',
+				keyup: 'search',
+				paste: 'search',
+				clearicontap: 'unfilter'
 			}
+			
 		}
 	},
 	
+
+	search: function(self, e, eOpts) {
+		// i : flag for case insensitive
+		var regex = new RegExp(self.getValue(), 'i');
+		Ext.getStore('Songs').filter('title', regex);
+	},
+	
+	unfilter: function(self, e, eOpts) {
+		Ext.getStore('Songs').clearFilter();
+	},
+
+	/*store.on('load', function(store, records) {
+	    if (records.length == 0) {
+	        nestedList.getActiveItem().setHtml(nestedList.getEmptyText());
+	    }
+	}),*/
 
 	
 	onItemTap: function(self, index, target, record, e)
@@ -57,7 +81,6 @@ Ext.define('Muzic.controller.Songs', {
         //var container = self.getParent().getParent().getParent(),
         // use ComponentQuery to get the audio component (using its xtype)
         //audio = container.down('audio');
-        
         //set first song if nothing has been tapped
         if(Muzic.util.Player.getUserSelectedRecord() === undefined) {
         	filepath = Ext.getStore('Songs').first().getData().filepath;
@@ -100,7 +123,6 @@ Ext.define('Muzic.controller.Songs', {
 			return;
 		}
 		audioPlayer.toggle();
-		this.getPauseButton().setText(audioPlayer.isPlaying() ? 'Pause' : 'Play');
 		return audioPlayer.isPlaying();
 	}
 	
