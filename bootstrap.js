@@ -638,13 +638,19 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
+  "Muzic.controller.Artists": [],
+  "Muzic.controller.Player": [],
   "Muzic.controller.Songs": [],
   "Muzic.model.Song": [],
+  "Muzic.store.Artists": [],
   "Muzic.store.Songs": [],
   "Muzic.util.Database": [],
   "Muzic.util.FileRead": [],
+  "Muzic.util.Player": [],
+  "Muzic.view.Container": [],
   "Muzic.view.Main": [],
   "Muzic.view.Player": [],
+  "Muzic.view.albums.Card": [],
   "Muzic.view.titles.Card": []
 });
 Ext.ClassManager.addNameAliasMappings({
@@ -1364,16 +1370,24 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "Muzic.controller.Artists": [],
+  "Muzic.controller.Player": [],
   "Muzic.controller.Songs": [],
   "Muzic.model.Song": [],
+  "Muzic.store.Artists": [],
   "Muzic.store.Songs": [],
   "Muzic.util.Database": [],
   "Muzic.util.FileRead": [],
+  "Muzic.util.Player": [],
+  "Muzic.view.Container": [],
   "Muzic.view.Main": [
     "widget.main"
   ],
   "Muzic.view.Player": [
     "widget.player"
+  ],
+  "Muzic.view.albums.Card": [
+    "widget.nestedlist"
   ],
   "Muzic.view.titles.Card": [
     "widget.titleContainer"
