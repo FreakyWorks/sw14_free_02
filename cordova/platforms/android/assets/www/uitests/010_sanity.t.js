@@ -20,6 +20,5 @@ StartTest(function(t) {
         }
     );
 
-
-    t.done();   // Optional, marks the correct exit point from the test
+    t.done();
 });
