@@ -25,9 +25,7 @@ StartTest(function(t) {
         	var button_icon = t.cq1('#playButton').getIconCls();
         	t.is(button_icon, "pause", 'Button icon is Pause after pressing');
         	t.is(t.cq1('audio').isPlaying(), true, 'Audio is playing after button press');
-        	
         	oldUserSelectedRecord = Muzic.util.Player.getUserSelectedRecord();
-        	
             next();
         },
 
@@ -37,15 +35,13 @@ StartTest(function(t) {
         
         function(next) {
         	var newUserSelectedRecord = Muzic.util.Player.getUserSelectedRecord();
-        	t.is(parseInt(oldUserSelectedRecord.getId()) + 1, newUserSelectedRecord.getId(), 'Next record has been selected');
-        	//TODO get real id
+        	t.is(parseInt(oldUserSelectedRecord.getId().replace( /^\D+/g, '')) + 1, newUserSelectedRecord.getId().replace( /^\D+/g, ''), 'Next record has been selected');
+        	oldUserSelectedRecord = newUserSelectedRecord;
         	var button_icon = t.cq1('#playButton').getIconCls();
         	t.is(button_icon, "pause", 'Button text is still pause after pressing fast forward');
         	t.is(t.cq1('audio').isPlaying(), true, 'Audio is playing after pressing fast forward');
             next();
         },
-        
-        
         
         { waitFor : 2000 },
         
@@ -55,6 +51,17 @@ StartTest(function(t) {
         	var button_icon = t.cq1('#playButton').getIconCls();
         	t.is(button_icon, "play", 'Button text is play after pressing pause');
         	t.is(t.cq1('audio').isPlaying(), false, 'Audio is paused');
+            next();
+        },
+        
+        { tap : '>> #rewindButton' },
+        
+        function(next) {
+        	var newUserSelectedRecord = Muzic.util.Player.getUserSelectedRecord();
+        	t.is(parseInt(oldUserSelectedRecord.getId().replace( /^\D+/g, '')) - 1, newUserSelectedRecord.getId().replace( /^\D+/g, ''), 'Previous record has been selected');
+        	var button_icon = t.cq1('#playButton').getIconCls();
+        	t.is(button_icon, "pause", 'Button text is pause after pressing back');
+        	t.is(t.cq1('audio').isPlaying(), true, 'Audio is playing again');
             t.done();
         }
     );

@@ -12,14 +12,13 @@ StartTest(function(t) {
         { 
             waitFor : 'CQ', 
             args    : 'player',
-            desc    : 'Should find pause button on app start'
+            desc    : 'Should find play button on app start'
         },
         
         function(next) {
-            t.ok(t.cq1('#pauseButton'), 'Should find a pause button');
+            t.ok(t.cq1('#playButton'), 'Should find a play button');
         }
     );
 
-
-    t.done();   // Optional, marks the correct exit point from the test
+    t.done();
 });
