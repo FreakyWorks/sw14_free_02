@@ -35,13 +35,8 @@ describe("Muzic.util.FileRead", function () {
 		    expect(Muzic.util.FileRead.getDir()[0].name).toBe('Music');
 			done();
 		});
-		
-		afterEach(function () {
-	    	//Muzic.util.FileRead.setDir(undefined);
-		});
 	});
 	
-	//TODO try to merge it now
 	describe("Directory Reader", function () {
 		 beforeEach(function(done) {
 		  	Muzic.util.FileRead.requestEntries(Muzic.util.FileRead.getDir().length - 1);
@@ -113,7 +108,7 @@ describe("Muzic.util.FileRead", function () {
 			var object = Muzic.util.FileRead.createObject(Muzic.util.FileRead.getDirEntries().length - 1);
 			
 			expect(object).toBeDefined();
-			expect(object.filepath).toMatch('file:///storage/sdcard/Music/');
+			expect(object.filepath).toMatch('file:///storage/sdcard');
 		});
 	});
 	
@@ -171,7 +166,5 @@ describe("Muzic.util.FileRead", function () {
 			expect(titleArtist.artist).toBe("My Artist");
 		});
 	});
-	
-
 });
 

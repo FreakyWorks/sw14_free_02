@@ -45,7 +45,7 @@ StartTest(function (t) {
         	t.is(t.cq1('audio').isPlaying(), true, "Audio is playing");
         	previously_playing = currently_playing;
         	currently_playing = t.cq1('audio').innerElement.dom.innerHTML;
-        	t.isnot(currently_playing, previously_playing, 'Changed to next element');
+        	t.isnot(currently_playing, previously_playing, 'Changed to next element (Album needs to have at least two songs)');
         	next();
         },
         

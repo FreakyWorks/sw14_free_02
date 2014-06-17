@@ -18,6 +18,12 @@ Ext.define('Muzic.store.Songs', {
 	            type: 'json',
 	            rootProperty: 'items'
 	        }
+        },
+        sorters: [
+        {
+            property : "title",
+            direction: "ASC"
         }
+    ]
     }
 });
