@@ -19,6 +19,12 @@ Ext.define('Muzic.store.Artists', {
 	            type: 'json',
 	            rootProperty: 'items'
 	        }
-        }
+       },
+       sorters: [
+       {
+           property : "title",
+           direction: "ASC"
+       }
+    ]
     }
 });

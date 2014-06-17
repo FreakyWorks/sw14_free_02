@@ -90,7 +90,6 @@ describe("Muzic.util.Database", function () {
 
 	});
 	
-
 	
 	describe("Song deleter", function () {
 		var old_number_of_artists = undefined;
@@ -176,14 +175,12 @@ describe("Muzic.util.Database", function () {
 			var lastItem = data[data.length - 1].data;
 			expect(lastItem).toBeDefined();
 			expect(lastItem.filepath).toMatch('samplepath');
-			//done();
 		});
 		it("should fail but keep existing data intact", function() {
 			Muzic.util.Database.addModelToStore(undefined, store);
 			var data = store.data.all;
 			var lastItem = data[data.length - 1].data;
 			expect(lastItem.filepath).toMatch('samplepath');
-			//done();
 		});
 	});
 	
@@ -252,12 +249,13 @@ describe("Muzic.util.Database", function () {
 			var found_crash1mp3 = false;
 			//Expecting that folder contains both crash.mp3 and crash1.mp3
 			for (var counter = 0; counter < data.length; counter++) {
-				console.log("JROEHWER");
 				console.log(data[counter].data.filepath);
-				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash.mp3') {
+				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash.mp3' ||
+					data[counter].data.filepath === 'file:///storage/sdcard0/Music/crash.mp3') {
 					found_crashmp3 = true;
 				}
-				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash1.mp3') {
+				if (data[counter].data.filepath === 'file:///storage/sdcard/Music/crash1.mp3' ||
+				    data[counter].data.filepath === 'file:///storage/sdcard0/Music/crash1.mp3') {
 					found_crash1mp3 = true;
 				}
 			}

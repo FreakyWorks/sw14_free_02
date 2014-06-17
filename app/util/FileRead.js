@@ -10,7 +10,7 @@ Ext.define('Muzic.util.FileRead', {
         fileSys : undefined,
         dir: [],
         dirEntries: [],
-        recognizedEndings : ['mp3'],
+        recognizedEndings : ['aac', 'mp3'],
         tryCounter: 0,
         currentlyReading: 0
    },
@@ -50,17 +50,18 @@ Ext.define('Muzic.util.FileRead', {
 		console.log("requestingDir: " + folder);
 		var fileSystem = Muzic.util.FileRead.getFileSys();
 		
-		if(fileSystem == undefined) {
+		if(fileSystem === undefined) {
 			if(Muzic.util.FileRead.getTryCounter() >= 10) {
 				Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 				return;
 			}
 			Muzic.util.FileRead.requestOurFS();
+			Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 			setTimeout(function() { Muzic.util.FileRead.requestDir(folder); }, 250);
 			Muzic.util.FileRead.setTryCounter(Muzic.util.FileRead.getTryCounter() + 1);
 		}
 		else {
-			fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.logErrorCode);
+			fileSystem.root.getDirectory(folder, {create: false, exclusive: false}, this.gotDirectory, this.folderNotFound);
 		}
 		
 	},
@@ -88,7 +89,7 @@ Ext.define('Muzic.util.FileRead', {
 	gotEntries : function (entries) {
 		console.log('got entries');
 		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
-		console.log(entries);
+		//console.log(entries);
 		for (var counter = 0; counter < entries.length; counter++) {
 			if (entries[counter].isDirectory) {
 				Muzic.util.FileRead.requestDir(entries[counter].fullPath.slice(1));
@@ -96,11 +97,6 @@ Ext.define('Muzic.util.FileRead', {
 		}
 		Muzic.util.FileRead.setDirEntries(Muzic.util.FileRead.getDirEntries().concat(entries));
 		console.log("currently" + Muzic.util.FileRead.getCurrentlyReading());
-		
-        window.setTimeout(function () {
-        	// in case something goes horribly wrong
-        	Muzic.util.Database.createTables();
-         }, 5000);
 		
 		if (Muzic.util.FileRead.getCurrentlyReading() <= 1) {
 			Muzic.util.Database.createTables();
@@ -240,14 +236,14 @@ Ext.define('Muzic.util.FileRead', {
 			return;
 		}
 		else {
-			console.log(Muzic.util.FileRead.getDirEntries()[entryCounter]);
-			
 			if(!(Muzic.util.FileRead.checkEnding(Muzic.util.FileRead.getDirEntries()[entryCounter].name))) {
 				console.log('wrong ending');
 				return;
 			}
 			var titleArtist = Muzic.util.FileRead.getTitleArtistFromFileName(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			//Muzic.util.FileRead.loadID3Tag(Muzic.util.FileRead.getDirEntries()[entryCounter]);
+			console.log(decodeURIComponent(Muzic.util.FileRead.getDirEntries()[entryCounter].nativeURL));
+			console.log(Muzic.util.FileRead.getDirEntries()[entryCounter]);
 			return { 
 					title : titleArtist.title,
 					artist : titleArtist.artist,
@@ -256,14 +252,26 @@ Ext.define('Muzic.util.FileRead', {
 		}
 	},
 	
+	hideProgressIndicator : function () {
+		var progressIndicator = Ext.ComponentQuery.query('#progressIndicator');
+		if (progressIndicator !== undefined && progressIndicator.length > 0) {
+			progressIndicator[0].hide();
+		}
+	},
 
 	//Our error handlers
 	didntGetFileSystem : function (err) {
-		//TODO show fail to user
 		console.log('An error has occured: ' + err.target.error.code);
+		alert("Could not get filesystem! Look if your internal memory is accessible from other apps and try again.");
+		Muzic.util.FileRead.hideProgressIndicator();
 	},
 	logErrorCode : function (err) {
 		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 		console.log('An error has occured: ' + err.code + ' - See https://developer.mozilla.org/en-US/docs/Web/API/FileError');
+	},
+	folderNotFound : function(err) {
+		alert("Could not find the Music folder on your internal memory! Create it and add music to it.");
+		Muzic.util.FileRead.hideProgressIndicator();
+		Muzic.util.FileRead.setCurrentlyReading(Muzic.util.FileRead.getCurrentlyReading() - 1);
 	}
 });

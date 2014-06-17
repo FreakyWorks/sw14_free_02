@@ -20,7 +20,6 @@ Ext.define('Muzic.controller.Artists', {
 	},
 	
 	onLeafItemTap : function(self, list, index, target, record, e, eOpts) {
-		console.log("start");
 		Muzic.util.Player.setCurrentList(list);
 		Muzic.util.Player.setCurrentSongIndex(index);
 		
@@ -35,8 +34,9 @@ Ext.define('Muzic.controller.Artists', {
 	},
 	
 	onSelectionChange : function(self, list, record, eOpts) {
-		console.log(record);
-		if (record[0].data !== undefined && record[0].data.leaf) {
+		//console.log(record);
+		//console.log(eOpts);
+		if (record.length === 1 && record[0].data !== undefined && record[0].data.leaf) {
 			Muzic.util.Player.setCurrentList(list);
 			Muzic.util.Player.setUserSelectedRecord(record[0]);
 			this.getAudioPlayer().updateUrl(record[0].data.filepath);

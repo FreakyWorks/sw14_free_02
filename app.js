@@ -21,6 +21,7 @@ Ext.application({
 
     requires: [
         'Ext.MessageBox',
+        'Ext.ProgressIndicator',
         'Muzic.util.FileRead',
         'Muzic.util.Database',
         'Muzic.util.Player'
@@ -55,15 +56,24 @@ Ext.application({
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-        
+            		Ext.Viewport.add(Ext.create('Muzic.view.Main'));
+    		
         /*Muzic.util.Proxy.process('data/feed.js', function() {
             Ext.Viewport.add({ xtype: 'main' });
             Ext.Viewport.setMasked(false);
         });*/
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('Muzic.view.Main'));
+        
+	    var progressIndicator = Ext.create('Ext.ProgressIndicator', {
+	        renderTo: Ext.getBody(),
+	        id: 'progressIndicator',
+	        width: 300
+	    });
+    	Ext.Viewport.add(progressIndicator);
+		progressIndicator.show();
+        
         if(!testUI) {
-	        Muzic.util.FileRead.requestDir('Music');  
+        	Muzic.util.FileRead.requestDir('Music');  
         }
         else {
 	        window.setTimeout(function () {

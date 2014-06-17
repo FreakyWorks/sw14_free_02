@@ -11,7 +11,8 @@ Ext.define('Muzic.controller.Songs', {
 			playButtonInRow: '#playButton',
 			rewindButtonInRow: '#rewindButton',
 			fastForwardButtonInRow: '#fastforwardButton',
-			searchField: '#search'
+			searchField: '#search',
+			songsStore: '#Songs'
 		},
 		
 		control: {
@@ -24,8 +25,8 @@ Ext.define('Muzic.controller.Songs', {
 			},
 			searchField: {
 				action: 'search',
-				keyup: 'search',
-				paste: 'search',
+				//keyup: 'search',
+				//paste: 'search',
 				clearicontap: 'unfilter'
 			}
 		}
@@ -37,14 +38,20 @@ Ext.define('Muzic.controller.Songs', {
 			this.unfilter();
 			return;
 		}
+		if (self.getValue().length <= 2) {
+			return;
+		}
 		var regex = new RegExp(self.getValue(), 'i');
+		Ext.getStore('Songs').clearFilter();
 		Ext.getStore('Songs').filter('title', regex);
+		this.getRewindButtonInRow().disable();
+		this.getFastForwardButtonInRow().disable();
 	},
 	
 	unfilter: function(self, e, eOpts) {
-		this.getRewindButtonInRow().enable();
-		this.getFastForwardButtonInRow().enable();
 		Ext.getStore('Songs').clearFilter();
+		this.getRewindButtonInRow().disable();
+		this.getFastForwardButtonInRow().disable();
 	},
 
 	onItemTap: function(list, index, target, record, e)
